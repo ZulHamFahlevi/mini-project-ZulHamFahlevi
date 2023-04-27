@@ -1,0 +1,11 @@
+.site-layout-background-header {
+    padding: 0;
+    background: #fff;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.btn-logout {
+    margin-right: 20px;
+}

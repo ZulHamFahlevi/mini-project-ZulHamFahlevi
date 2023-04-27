@@ -1,0 +1,17 @@
+.site-layout {
+    min-height: 100vh;
+}
+
+.site-layout-background {
+    margin: 24px 16px;
+    padding: 24px;
+    min-height: 400px;
+    background: #fff;
+}
+
+.btn-scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}

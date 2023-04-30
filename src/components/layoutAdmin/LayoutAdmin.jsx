@@ -5,7 +5,7 @@ import HeaderComponent from "./header/HeaderComponent";
 import "./layout.css";
 import SidebarComponent from "./sidebar/SidebarComponent";
 
-const LayoutComponent = ({ children }) => {
+const LayoutAdmin = ({ children }) => {
   const { Content } = Layout;
 
   return (
@@ -35,4 +35,4 @@ const LayoutComponent = ({ children }) => {
   );
 };
 
-export default LayoutComponent;
+export default LayoutAdmin;

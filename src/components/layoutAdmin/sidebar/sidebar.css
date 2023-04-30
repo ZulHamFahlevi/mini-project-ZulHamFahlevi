@@ -1,7 +1,3 @@
-.site-layout-background-sidebar {
-    transition: all 0.3s;
-}
-
 .btn-collapse {
     font-size: 18px;
     text-align: center;
@@ -12,5 +8,5 @@
 }
 
 .btn-collapse:hover {
-    background: #cacaca6c
+    background-color: #fff;
 }

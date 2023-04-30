@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import DashboardComponent from "../page/dashboard/DashboardComponent";
 import InputProductComponent from "./../page/inputProduct/InputProductComponent";
-import LayoutComponent from "../components/layout/LayoutComponent";
 import LayoutUser from "../components/layoutUser/LayoutUser";
 import HomePage from "../page/homePage/HomePage";
 import ProductPage from "../page/productPage/ProductPage";
+import LayoutAdmin from "./../components/layoutAdmin/LayoutAdmin";
 
 const RouteManagement = () => {
   return (
@@ -15,12 +15,12 @@ const RouteManagement = () => {
           <Route path="/product" element={<ProductPage />} />
         </Routes>
       </LayoutUser>
-      <LayoutComponent>
+      <LayoutAdmin>
         <Routes>
           <Route path="/" element={<DashboardComponent />} />
           <Route path="/input-product" element={<InputProductComponent />} />
         </Routes>
-      </LayoutComponent>
+      </LayoutAdmin>
     </>
   );
 };

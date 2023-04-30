@@ -3,7 +3,7 @@ import {
   DashboardOutlined,
   FontColorsOutlined,
 } from "@ant-design/icons";
-import { AlfatihIcon } from "../../../assets/index";
+import { AlfatihIcon2 } from "../../../assets/index";
 import { Link } from "react-router-dom";
 
 export const MENU_ITEM = [
@@ -16,7 +16,7 @@ export const MENU_ITEM = [
             height: 30,
           }}
         >
-          <img src={AlfatihIcon} alt="icon" width={75} />
+          <img src={AlfatihIcon2} alt="icon" width={75} />
         </div>
       </Link>
     ),

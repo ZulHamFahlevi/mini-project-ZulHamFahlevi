@@ -1,15 +1,16 @@
-import { Card, Image } from "antd";
+import { Card } from "antd";
 import React from "react";
-import { RUPIAH } from "../../../components/currency";
+import { Image } from "antd";
+import { RUPIAH } from "../../../components/currency/index";
 
-const ProductList = () => {
+const ProductCard = () => {
   return (
     <>
       <Card
         hoverable
         style={{
           width: 240,
-          marginBottom: "20px",
+          margin: "20px auto",
         }}
         cover={
           <Image
@@ -27,4 +28,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductCard;

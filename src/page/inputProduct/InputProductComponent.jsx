@@ -1,30 +1,138 @@
 import { UploadOutlined } from "@ant-design/icons";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Button,
   Col,
   Form,
   Input,
   InputNumber,
+  Modal,
   Row,
   Select,
   Table,
   Upload,
+  message,
 } from "antd";
+import { useState } from "react";
+import { uploaderConfig } from "./../../config/uploader-config";
+import { useSingleUploader } from "./../../hooks/useSingleUploader";
 import "./inputProduct.css";
+import { ADD_PRODUCT, GET_PRODUCT } from "./query/form-query";
 
-const { TextArea } = Input;
+//convert image to base64
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 const InputProductComponent = () => {
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
+  const { TextArea } = Input;
+  const [rowData, setRowData] = useState();
+  const [isEdit, setIsEdit] = useState(false);
+  const [imageProduct, setImageProduct] = useState("");
+  const [form] = Form.useForm();
+
+  //GraphQL
+  //GET DATA
+  const {
+    data: dataProduct,
+    loading: loadingProduct,
+    error: errorProduct,
+  } = useQuery(GET_PRODUCT);
+
+  //ADD DATA
+  const [addProduct, { loading: addProductLoading }] = useMutation(
+    ADD_PRODUCT,
+    {
+      refetchQueries: [{ query: GET_PRODUCT }],
     }
-    return e?.fileList;
-  };
+  );
+
+  // Upload Image
+  const [isLoadingUpload, uploadFile] = useSingleUploader();
+
+  //table columns
+  const TABLE_COLUMNS = [
+    {
+      title: "Image Product",
+      dataIndex: "imageProduct",
+      key: "imageProduct",
+      render: (_, record, index) => (
+        <img
+          src={record.imageProduct}
+          alt={`imageProduct-${index}`}
+          style={{ height: "70px" }}
+        />
+      ),
+    },
+    {
+      title: "Product Name",
+      dataIndex: "productName",
+      key: "productName",
+    },
+    {
+      title: "Product Type",
+      dataIndex: "productType",
+      key: "productType",
+    },
+    {
+      title: "Product Price",
+      dataIndex: "productPrice",
+      key: "productPrice",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+    },
+  ];
 
   //add product
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const addData = (values) => {
+    const body = {
+      imageProduct: imageProduct,
+      ...values,
+    };
+    addProduct({
+      variables: {
+        object: {
+          ...body,
+        },
+      },
+      onError: (err) => {
+        message.open({
+          type: "error",
+          content: `${err?.message}`,
+        });
+      },
+      onCompleted: () => {
+        Modal.success({
+          title: "Success",
+          content: "Success Add Product",
+          onOk: () => {
+            form.resetFields();
+            setImageProduct("");
+          },
+        });
+      },
+    });
+  };
+
+  // to handle Upload Image
+  const handleUpload = async (file) => {
+    const body = {
+      file: await getBase64(file.file.originFileObj),
+      upload_preset: uploaderConfig.upload_preset,
+      public_id: file.file.name.replace(/\.[^.]*$/, ""),
+      api_key: uploaderConfig.api_key,
+    };
+    uploadFile(body, (data) => {
+      console.log({ data });
+      setImageProduct(data.url);
+    });
   };
 
   return (
@@ -32,7 +140,12 @@ const InputProductComponent = () => {
       <Row justify={"center"}>
         <Col span={8}>
           <h1 className="input-product-title-form">Input Product</h1>
-          <Form name="inputProduct" onFinish={onFinish} layout="vertical">
+          <Form
+            name="inputProduct"
+            onFinish={addData}
+            layout="vertical"
+            form={form}
+          >
             <Form.Item
               className="input-product-form-item"
               label="Product Name"
@@ -60,24 +173,33 @@ const InputProductComponent = () => {
             </Form.Item>
             <Form.Item
               className="input-product-form-item"
-              name="imageProduct"
               label="Image Product"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[
-                {
-                  required: true,
-                  message: "Input Image Product",
-                },
-              ]}
             >
               <Upload
-                name="logo"
-                action="/https://643d70e0f0ec48ce905c7776.mockapi.io/products"
-                listType="picture"
+                showUploadList={false}
+                name="file"
+                maxCount={1}
+                onRemove={() => {
+                  setImageProduct("");
+                }}
+                customRequest={() => {}}
+                onChange={handleUpload}
                 accept="image/*"
               >
-                <Button icon={<UploadOutlined />}>Upload</Button>
+                <Button
+                  icon={<UploadOutlined />}
+                  type={!imageProduct ? "dashed" : "default"}
+                  loading={isLoadingUpload}
+                >
+                  {imageProduct ? "Change Image" : "Upload Image"}
+                </Button>
+                {/* {imageProduct && (
+                    <img
+                      src={imageProduct}
+                      alt="imageProduct"
+                      style={{ height: "70px", width: "100px" }}
+                    />
+                  )} */}
               </Upload>
             </Form.Item>
             <Form.Item
@@ -113,6 +235,7 @@ const InputProductComponent = () => {
                 className="input-product-form-item-button-submit"
                 type="primary"
                 htmlType="submit"
+                loading={addProductLoading}
               >
                 Submit
               </Button>
@@ -121,45 +244,14 @@ const InputProductComponent = () => {
         </Col>
         <Col span={20}>
           <Table
-            rowKey={(record) => record.id}
-            columns={[
-              {
-                title: "Product Name",
-                dataIndex: "productName",
-                key: "productName",
-              },
-              {
-                title: "Product Type",
-                dataIndex: "productType",
-                key: "productType",
-              },
-              {
-                title: "Product Price",
-                dataIndex: "productPrice",
-                key: "productPrice",
-              },
-              {
-                title: "Product Description",
-                dataIndex: "productDescription",
-                key: "productDescription",
-              },
-            ]}
-            dataSource={[
-              {
-                id: 1,
-                productName: "Baju Koko",
-                productType: "Pakaian",
-                productPrice: "Rp 100.000",
-                productDescription: "Baju Koko",
-              },
-              {
-                id: 2,
-                productName: "Mukena",
-                productType: "Perlengkapan Shalat",
-                productPrice: "Rp 200.000",
-                productDescription: "Mukena",
-              },
-            ]}
+            rowKey={(record) => record.uuid}
+            columns={TABLE_COLUMNS}
+            dataSource={dataProduct?.product}
+            loading={loadingProduct}
+            pagination={{
+              pageSize: 5,
+              position: ["bottomCenter"],
+            }}
           />
         </Col>
       </Row>

@@ -1,7 +1,8 @@
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, DeleteFilled } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   Button,
+  Card,
   Col,
   Form,
   Input,
@@ -12,21 +13,21 @@ import {
   Table,
   Upload,
   message,
+  Image,
+  Space,
+  Popconfirm,
 } from "antd";
 import { useState } from "react";
+import { RUPIAH } from "../../components/currency";
 import { uploaderConfig } from "./../../config/uploader-config";
 import { useSingleUploader } from "./../../hooks/useSingleUploader";
 import "./inputProduct.css";
-import { ADD_PRODUCT, GET_PRODUCT } from "./query/form-query";
-
-//convert image to base64
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+import {
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  GET_PRODUCT,
+  UPDATE_PRODUCT,
+} from "./query/form-query";
 
 const InputProductComponent = () => {
   const { TextArea } = Input;
@@ -34,6 +35,21 @@ const InputProductComponent = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [imageProduct, setImageProduct] = useState("");
   const [form] = Form.useForm();
+
+  //onReset Form
+  const onReset = () => {
+    form.resetFields();
+    setImageProduct("");
+  };
+
+  //convert image to base64
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   //GraphQL
   //GET DATA
@@ -51,6 +67,22 @@ const InputProductComponent = () => {
     }
   );
 
+  //EDIT DATA
+  const [editProduct, { loading: editProductLoading }] = useMutation(
+    UPDATE_PRODUCT,
+    {
+      refetchQueries: [{ query: GET_PRODUCT }],
+    }
+  );
+
+  //DELETE DATA
+  const [deleteProduct, { loading: deleteProductLoading }] = useMutation(
+    DELETE_PRODUCT,
+    {
+      refetchQueries: [{ query: GET_PRODUCT }],
+    }
+  );
+
   // Upload Image
   const [isLoadingUpload, uploadFile] = useSingleUploader();
 
@@ -61,7 +93,7 @@ const InputProductComponent = () => {
       dataIndex: "imageProduct",
       key: "imageProduct",
       render: (_, record, index) => (
-        <img
+        <Image
           src={record.imageProduct}
           alt={`imageProduct-${index}`}
           style={{ height: "70px" }}
@@ -80,18 +112,106 @@ const InputProductComponent = () => {
     },
     {
       title: "Product Price",
-      dataIndex: "productPrice",
+      render: (record) => RUPIAH(record.productPrice),
       key: "productPrice",
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      render: (_, record) =>
+        dataProduct?.product.length >= 1 ? (
+          <Space size="middle">
+            <Button type="primary" onClick={() => handleEdit(record)}>
+              Edit
+            </Button>
+            <Popconfirm
+              title="Are you sure to delete this task?"
+              onConfirm={() => onDelete(record.uuid)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger>
+                Delete
+              </Button>
+            </Popconfirm>
+          </Space>
+        ) : null,
     },
   ];
 
+  //handle edit
+  const handleEdit = (record) => {
+    setIsEdit(true);
+    setRowData(record);
+    setImageProduct(record.imageProduct);
+  };
+
+  //handle cancel edit
+  const handleCancelEdit = () => {
+    setIsEdit(false);
+    setRowData();
+    onReset();
+  };
+
+  //edit product
+  const onEdit = (values) => {
+    const { uuid } = rowData;
+    const body = {
+      imageProduct: imageProduct,
+      ...values,
+    };
+    editProduct({
+      variables: { pk_columns: { uuid: uuid }, _set: { ...body } },
+      onError: (err) => {
+        message.open({
+          type: "error",
+          content: `${err.message}`,
+        });
+      },
+      onCompleted: () => {
+        Modal.success({
+          title: "Success",
+          content: "Success Edit Product",
+          onOk: () => {
+            form.resetFields();
+            setImageProduct("");
+            setIsEdit(false);
+          },
+        });
+      },
+    });
+  };
+
+  //delete product
+  const onDelete = (uuid) => {
+    const data = [...dataProduct?.product];
+    const isExisted = data.find((item) => item.uuid === uuid);
+
+    if (isExisted) {
+      deleteProduct({
+        variables: {
+          uuid: isExisted.uuid,
+        },
+        onError: (err) => {
+          message.open({
+            type: "error",
+            content: `${err.message}`,
+            duration: 2,
+          });
+        },
+        onCompleted: () => {
+          Modal.success({
+            title: "Delete Data Berhasil",
+            content: "Data Berhasil Dihapus",
+          });
+        },
+      });
+    }
+  };
+
   //add product
-  const addData = (values) => {
+  const onAdd = (values) => {
     const body = {
       imageProduct: imageProduct,
       ...values,
@@ -142,9 +262,31 @@ const InputProductComponent = () => {
           <h1 className="input-product-title-form">Input Product</h1>
           <Form
             name="inputProduct"
-            onFinish={addData}
+            onFinish={isEdit ? onEdit : onAdd}
             layout="vertical"
             form={form}
+            fields={[
+              {
+                name: ["productName"],
+                value: rowData?.productName,
+              },
+              {
+                name: ["productType"],
+                value: rowData?.productType,
+              },
+              {
+                name: ["imageProduct"],
+                value: rowData?.imageProduct,
+              },
+              {
+                name: ["productDescription"],
+                value: rowData?.productDescription,
+              },
+              {
+                name: ["productPrice"],
+                value: rowData?.productPrice,
+              },
+            ]}
           >
             <Form.Item
               className="input-product-form-item"
@@ -179,9 +321,6 @@ const InputProductComponent = () => {
                 showUploadList={false}
                 name="file"
                 maxCount={1}
-                onRemove={() => {
-                  setImageProduct("");
-                }}
                 customRequest={() => {}}
                 onChange={handleUpload}
                 accept="image/*"
@@ -193,14 +332,41 @@ const InputProductComponent = () => {
                 >
                   {imageProduct ? "Change Image" : "Upload Image"}
                 </Button>
-                {/* {imageProduct && (
-                    <img
-                      src={imageProduct}
-                      alt="imageProduct"
-                      style={{ height: "70px", width: "100px" }}
-                    />
-                  )} */}
               </Upload>
+              <span
+                style={{
+                  display: "flex",
+                  justifyContent: "start",
+                  marginTop: "10px",
+                }}
+              >
+                {imageProduct && (
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Card className="input-product-form-item-image">
+                      <Image
+                        src={imageProduct}
+                        alt="imageProduct"
+                        width={200}
+                      />
+                    </Card>
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => setImageProduct("")}
+                      style={{
+                        marginLeft: "10px",
+                      }}
+                    >
+                      <DeleteFilled />
+                    </Button>
+                  </span>
+                )}
+              </span>
             </Form.Item>
             <Form.Item
               className="input-product-form-item"
@@ -230,16 +396,37 @@ const InputProductComponent = () => {
             >
               <TextArea rows={4} />
             </Form.Item>
-            <Form.Item className="input-product-form-item-button">
-              <Button
-                className="input-product-form-item-button-submit"
-                type="primary"
-                htmlType="submit"
-                loading={addProductLoading}
-              >
-                Submit
-              </Button>
-            </Form.Item>
+            {isEdit ? (
+              <Form.Item>
+                <Space>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={editProductLoading}
+                  >
+                    Update
+                  </Button>
+                  <Button type="primary" danger onClick={handleCancelEdit}>
+                    Cancel
+                  </Button>
+                </Space>
+              </Form.Item>
+            ) : (
+              <Form.Item>
+                <Space>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={addProductLoading}
+                  >
+                    Submit
+                  </Button>
+                  <Button htmlType="button" onClick={onReset}>
+                    Reset
+                  </Button>
+                </Space>
+              </Form.Item>
+            )}
           </Form>
         </Col>
         <Col span={20}>
@@ -247,7 +434,7 @@ const InputProductComponent = () => {
             rowKey={(record) => record.uuid}
             columns={TABLE_COLUMNS}
             dataSource={dataProduct?.product}
-            loading={loadingProduct}
+            loading={loadingProduct || deleteProductLoading}
             pagination={{
               pageSize: 5,
               position: ["bottomCenter"],

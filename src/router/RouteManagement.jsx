@@ -9,12 +9,12 @@ import LayoutAdmin from "./../components/layoutAdmin/LayoutAdmin";
 const RouteManagement = () => {
   return (
     <>
-      <LayoutUser>
+      {/* <LayoutUser>
         <Routes>
           <Route path="/home-page" element={<HomePage />} />
           <Route path="/product" element={<ProductPage />} />
         </Routes>
-      </LayoutUser>
+      </LayoutUser> */}
       <LayoutAdmin>
         <Routes>
           <Route path="/" element={<DashboardComponent />} />

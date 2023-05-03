@@ -15,13 +15,10 @@ const Sidebar = () => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        style={{
-          backgroundColor: "#fff",
-        }}
       >
         <Menu
           className="menu-sidebar"
-          theme="light"
+          theme="dark"
           mode="inline"
           defaultSelectedKeys={[window.location.pathname]}
           items={MENU_ITEM}

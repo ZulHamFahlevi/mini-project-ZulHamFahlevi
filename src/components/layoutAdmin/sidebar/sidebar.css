@@ -1,5 +1,5 @@
-.site-layout-background-sidebar {
-    transition: all 0.3s;
+.site-layout-background-sidebar{
+    transition: all 0.3s ease;
 }
 
 .btn-collapse {
@@ -12,5 +12,5 @@
 }
 
 .btn-collapse:hover {
-    background: #cacaca6c
+    background-color: #fff;
 }

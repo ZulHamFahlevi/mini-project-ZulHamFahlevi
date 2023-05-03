@@ -1,3 +1,7 @@
+.site-layout-background-sidebar{
+    transition: all 0.3s ease;
+}
+
 .btn-collapse {
     font-size: 18px;
     text-align: center;

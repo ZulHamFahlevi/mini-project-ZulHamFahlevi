@@ -1,21 +1,21 @@
-import { UploadOutlined, DeleteFilled } from "@ant-design/icons";
+import { DeleteFilled, UploadOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   Button,
   Card,
   Col,
   Form,
+  Image,
   Input,
   InputNumber,
   Modal,
+  Popconfirm,
   Row,
   Select,
+  Space,
   Table,
   Upload,
   message,
-  Image,
-  Space,
-  Popconfirm,
 } from "antd";
 import { useState } from "react";
 import { RUPIAH } from "../../components/currency";
@@ -126,7 +126,7 @@ const InputProductComponent = () => {
               Edit
             </Button>
             <Popconfirm
-              title="Are you sure to delete this task?"
+              title="Delete Product?"
               onConfirm={() => onDelete(record.uuid)}
               okText="Yes"
               cancelText="No"
@@ -141,10 +141,16 @@ const InputProductComponent = () => {
   ];
 
   //handle edit
-  const handleEdit = (record) => {
+  const handleEdit = (row_data) => {
     setIsEdit(true);
-    setRowData(record);
-    setImageProduct(record.imageProduct);
+    setRowData(row_data);
+    setImageProduct(row_data.imageProduct);
+    form.setFieldsValue({
+      productName: row_data.productName,
+      productType: row_data.productType,
+      productPrice: row_data.productPrice,
+      productDescription: row_data.productDescription,
+    });
   };
 
   //handle cancel edit
@@ -174,7 +180,7 @@ const InputProductComponent = () => {
           title: "Success",
           content: "Success Edit Product",
           onOk: () => {
-            form.resetFields();
+            setRowData();
             setImageProduct("");
             setIsEdit(false);
           },
@@ -265,28 +271,6 @@ const InputProductComponent = () => {
             onFinish={isEdit ? onEdit : onAdd}
             layout="vertical"
             form={form}
-            fields={[
-              {
-                name: ["productName"],
-                value: rowData?.productName,
-              },
-              {
-                name: ["productType"],
-                value: rowData?.productType,
-              },
-              {
-                name: ["imageProduct"],
-                value: rowData?.imageProduct,
-              },
-              {
-                name: ["productDescription"],
-                value: rowData?.productDescription,
-              },
-              {
-                name: ["productPrice"],
-                value: rowData?.productPrice,
-              },
-            ]}
           >
             <Form.Item
               className="input-product-form-item"
@@ -381,6 +365,7 @@ const InputProductComponent = () => {
                 style={{
                   width: "100%",
                 }}
+                min={1}
               />
             </Form.Item>
             <Form.Item
@@ -404,7 +389,7 @@ const InputProductComponent = () => {
                     htmlType="submit"
                     loading={editProductLoading}
                   >
-                    Update
+                    Save
                   </Button>
                   <Button type="primary" danger onClick={handleCancelEdit}>
                     Cancel

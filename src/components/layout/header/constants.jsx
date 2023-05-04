@@ -1,12 +1,15 @@
-import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import "./header.css";
 
-const onLogout = () => {
-  alert("Logout");
+import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
+
+const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("isAdmin");
 };
 
-export const MENU_ITEM_USER = [
+const MENU_ITEM = [
   {
     key: "/home-page",
     label: <Link to="/home-page">Home</Link>,
@@ -25,13 +28,14 @@ export const MENU_ITEM_USER = [
           shape="round"
           size="large"
           danger
-          onClick={onLogout}
+          onClick={logout}
         >
           Logout
         </Button>
       </Link>
     ),
-    path: "/login",
-    key: "",
+    key: "3",
   },
 ];
+
+export { MENU_ITEM };

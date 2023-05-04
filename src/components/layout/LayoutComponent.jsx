@@ -4,16 +4,19 @@ import FooterComponent from "./footer/FooterComponent";
 import HeaderComponent from "./header/HeaderComponent";
 import "./layout.css";
 import SidebarComponent from "./sidebar/SidebarComponent";
+import { GET_ADMIN } from "./query/profile-query";
+import { useQuery } from "@apollo/client";
 
-const LayoutAdmin = ({ children }) => {
+const LayoutComponent = ({ children }) => {
   const { Content } = Layout;
+  const isAdmin = localStorage.getItem("isAdmin");
 
   return (
     <>
       <Layout className="site-layout">
-        <SidebarComponent />
+        {isAdmin === "true" && <SidebarComponent />}
         <Layout>
-          <HeaderComponent />
+          <HeaderComponent isAdmin={isAdmin} />
           <Content className="site-layout-background">{children}</Content>
           <FooterComponent />
           <Button
@@ -35,4 +38,4 @@ const LayoutAdmin = ({ children }) => {
   );
 };
 
-export default LayoutAdmin;
+export default LayoutComponent;

@@ -107,6 +107,7 @@ const LoginPage = () => {
     //if admin login success
     if (isAdmin) {
       localStorage.setItem("token", true);
+      localStorage.setItem("isAdmin", true);
       setLoading(true);
       message.success({ content: "Login Success", duration: 1 });
       setTimeout(() => {
@@ -115,6 +116,7 @@ const LoginPage = () => {
       }, 1000);
     } else if (isUser) {
       localStorage.setItem("token", true);
+      localStorage.setItem("isAdmin", false);
       setLoading(true);
       message.success({ content: "Login Success", duration: 1 });
       setTimeout(() => {

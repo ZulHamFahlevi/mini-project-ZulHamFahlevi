@@ -7,25 +7,25 @@ import { AlfatihIcon2 } from "../../../assets/index";
 import { Link } from "react-router-dom";
 
 export const MENU_ITEM = [
+  // {
+  //   key: "",
+  //   label: (
+  //     <Link to="/dashboard">
+  //       <div
+  //         style={{
+  //           height: 30,
+  //         }}
+  //       >
+  //         <img src={AlfatihIcon2} alt="icon" width={75} />
+  //       </div>
+  //     </Link>
+  //   ),
+  //   icon: <FontColorsOutlined />,
+  // },
   {
-    key: "",
-    label: (
-      <Link to="/">
-        <div
-          style={{
-            height: 30,
-          }}
-        >
-          <img src={AlfatihIcon2} alt="icon" width={75} />
-        </div>
-      </Link>
-    ),
-    icon: <FontColorsOutlined />,
-  },
-  {
-    key: "/",
+    key: "/dashboard",
     icon: <DashboardOutlined />,
-    label: <Link to="/">Dashboard</Link>,
+    label: <Link to="/dashboard">Dashboard</Link>,
   },
   {
     key: "/input-product",

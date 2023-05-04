@@ -1,16 +1,16 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Suspense, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import LayoutComponent from "../components/layout/LayoutComponent";
+import LoadingComponent from "../components/loadingComponent/LoadingComponent";
 import DashboardComponent from "../page/dashboard/DashboardComponent";
-import InputProductComponent from "./../page/inputProduct/InputProductComponent";
-import LayoutUser from "../components/layoutUser/LayoutUser";
 import HomePage from "../page/homePage/HomePage";
 import ProductPage from "../page/productPage/ProductPage";
-import LayoutAdmin from "./../components/layoutAdmin/LayoutAdmin";
+import InputProductComponent from "./../page/inputProduct/InputProductComponent";
 import LoginPage from "./../page/loginPage/LoginPage";
-import { Suspense, useEffect } from "react";
-import LoadingComponent from "../components/loadingComponent/LoadingComponent";
 
 const RouteManagement = () => {
   const token = localStorage.getItem("token");
+  const isAdmin = localStorage.getItem("isAdmin");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,8 +26,8 @@ const RouteManagement = () => {
           <Routes>
             <Route path="/" element={<LoginPage />} />
           </Routes>
-        ) : (
-          <LayoutAdmin>
+        ) : isAdmin === "true" ? (
+          <LayoutComponent>
             <Routes>
               <Route path="/dashboard" element={<DashboardComponent />} />
               <Route
@@ -35,7 +35,14 @@ const RouteManagement = () => {
                 element={<InputProductComponent />}
               />
             </Routes>
-          </LayoutAdmin>
+          </LayoutComponent>
+        ) : (
+          <LayoutComponent>
+            <Routes>
+              <Route path="/home-page" element={<HomePage />} />
+              <Route path="/product" element={<ProductPage />} />
+            </Routes>
+          </LayoutComponent>
         )}
       </Suspense>
     </>

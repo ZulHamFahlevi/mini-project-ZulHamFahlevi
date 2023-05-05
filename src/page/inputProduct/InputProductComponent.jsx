@@ -180,9 +180,8 @@ const InputProductComponent = () => {
           title: "Success",
           content: "Success Edit Product",
           onOk: () => {
-            setRowData();
-            setImageProduct("");
             setIsEdit(false);
+            onReset();
           },
         });
       },

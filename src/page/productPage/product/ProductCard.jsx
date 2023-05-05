@@ -1,28 +1,72 @@
-import { Card } from "antd";
+import { Button, Card, Image, Space } from "antd";
 import React from "react";
-import { Image } from "antd";
 import { RUPIAH } from "../../../components/currency/index";
+import { formatDate } from "../../../components/dayjs";
 
-const ProductCard = () => {
+const ProductCard = ({
+  imageProduct,
+  productName,
+  productPrice,
+  productType,
+  timeStamp,
+  uuid,
+}) => {
   return (
     <>
       <Card
         hoverable
         style={{
-          width: 240,
-          margin: "20px auto",
+          width: 280,
+          marginBottom: "20px",
         }}
-        cover={
-          <Image
-            alt="example"
-            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            width={240}
-          />
-        }
+        cover={<Image alt="example" src={imageProduct} />}
       >
-        <h1>Title</h1>
-        <p>Description</p>
-        <p>{RUPIAH("adad100a0000")}</p>
+        <h1
+          style={{
+            fontWeight: "bold",
+            color: "#1890ff",
+          }}
+        >
+          {productName}
+        </h1>
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <p>{productType}</p>
+          <p>{RUPIAH(productPrice)}</p>
+        </Space>
+
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            marginTop: "20px",
+          }}
+        >
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(uuid);
+            }}
+            style={{
+              width: "100%",
+              fontWeight: "bold",
+            }}
+          >
+            Detail
+          </Button>
+          <p
+            style={{
+              fontWeight: "bold",
+              textAlign: "end",
+            }}
+          >
+            {formatDate(timeStamp)}
+          </p>
+        </Space>
       </Card>
     </>
   );

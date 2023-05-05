@@ -96,7 +96,7 @@ const InputProductComponent = () => {
         <Image
           src={record.imageProduct}
           alt={`imageProduct-${index}`}
-          style={{ height: "70px" }}
+          style={{ height: "50px" }}
         />
       ),
     },

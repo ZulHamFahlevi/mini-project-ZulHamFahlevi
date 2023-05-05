@@ -15,8 +15,8 @@ const ProductList = () => {
 
   return (
     <>
+      {loadingProduct && <LoadingComponent />}
       <List
-        loading={loadingProduct}
         grid={{ gutter: 16, column: 4 }}
         dataSource={dataProduct?.product}
         pagination={{
@@ -26,7 +26,7 @@ const ProductList = () => {
           pageSize: 8,
         }}
         renderItem={(item) => (
-          <List.Item>
+          <>
             <Card
               hoverable
               style={{
@@ -82,37 +82,9 @@ const ProductList = () => {
                 </p>
               </Space>
             </Card>
-          </List.Item>
+          </>
         )}
       />
-
-      {/* {loadingProduct && <LoadingComponent />}
-      <Row
-        Pagination={{
-          onChange: (page) => {
-            console.log(page);
-          },
-        }}
-      >
-        {dataProduct?.product?.map((item) => (
-          <Col key={item.uuid} span={6}>
-            <Card
-              hoverable
-              style={{
-                width: 240,
-                marginBottom: "20px",
-              }}
-              cover={
-                <Image alt="example" src={item.imageProduct} width={240} />
-              }
-            >
-              <h1>{item.productName}</h1>
-              <p>Description</p>
-              <p>{RUPIAH("adad100a0000")}</p>
-            </Card>
-          </Col>
-        ))}
-      </Row> */}
     </>
   );
 };

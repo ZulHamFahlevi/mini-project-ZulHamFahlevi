@@ -14,6 +14,7 @@ const ProductPage = () => {
   return (
     <>
       {loadingProduct && <LoadingComponent />}
+
       <List
         grid={{
           gutter: 16,
@@ -28,14 +29,21 @@ const ProductPage = () => {
         }}
         renderItem={(item) => (
           <>
-            <ProductCard
-              imageProduct={item.imageProduct}
-              productName={item.productName}
-              productPrice={item.productPrice}
-              productType={item.productType}
-              timeStamp={item.timeStamp}
-              uuid={item.uuid}
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <ProductCard
+                imageProduct={item.imageProduct}
+                productName={item.productName}
+                productPrice={item.productPrice}
+                productType={item.productType}
+                timeStamp={item.timeStamp}
+                uuid={item.uuid}
+              />
+            </div>
           </>
         )}
       />

@@ -63,7 +63,14 @@ const ProductDetail = () => {
         gutter={16}
       >
         <Col span={9}>
-          <Image src={dataProduct?.product_by_pk.imageProduct} />
+          <Image
+            src={dataProduct?.product_by_pk.imageProduct}
+            style={{
+              borderRadius: "10px",
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </Col>
         <Col span={9}>
           <Card
@@ -104,6 +111,7 @@ const ProductDetail = () => {
             <p
               style={{
                 textAlign: "justify",
+                marginTop: "20px",
               }}
             >
               Description Product:
@@ -113,13 +121,7 @@ const ProductDetail = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card
-            hoverable
-            style={{
-              position: "sticky",
-              top: "20px",
-            }}
-          >
+          <Card hoverable>
             <h1
               style={{
                 fontWeight: "bold",

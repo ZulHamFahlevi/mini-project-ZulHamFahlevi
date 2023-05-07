@@ -14,4 +14,18 @@ const GET_PRODUCT = gql`
   }
 `;
 
-export { GET_PRODUCT };
+const GET_PRODUCT_BY_PK = gql`
+  query product($uuid: uuid!) {
+    product_by_pk(uuid: $uuid) {
+      uuid
+      timeStamp
+      productName
+      productType
+      imageProduct
+      productDescription
+      productPrice
+    }
+  }
+`;
+
+export { GET_PRODUCT, GET_PRODUCT_BY_PK };

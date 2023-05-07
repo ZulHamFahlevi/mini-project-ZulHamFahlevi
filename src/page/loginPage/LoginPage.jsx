@@ -20,7 +20,6 @@ const LoginPage = () => {
   const handleRadioButton = ({ target: { value } }) => {
     setRadio(value);
     form.resetFields();
-    console.log(value);
   };
 
   //GraphQL
@@ -30,8 +29,6 @@ const LoginPage = () => {
     loading: profileLoading,
     error: profileError,
   } = useQuery(GET_PROFILE);
-
-  console.log(profileData);
 
   //ADD PROFILE
   const [register, { loading: isRegisterLoading, error: isRegisterError }] =
@@ -92,8 +89,6 @@ const LoginPage = () => {
         item.isAdmin === true
     );
 
-    console.log({ isAdmin });
-
     //user login validation (username & password & isAdmin)
     const isUser = profile?.find(
       (item) =>
@@ -102,26 +97,30 @@ const LoginPage = () => {
         item.isAdmin === false
     );
 
-    console.log({ isUser });
+    //cek apakah user terdaftar atau tidak di database
+    const isUserExist = profile?.some(
+      (item) => item.username === values.username
+    );
 
-    //if admin login success
-    if (isAdmin) {
+    //cek isAdmin
+    if (!isUserExist) {
+      Modal.warning({
+        title: "Username belum terdaftar",
+        content: "Silahkan register",
+        centered: true,
+        onOk() {
+          setRadio("register");
+          form.resetFields();
+        },
+      });
+    } else if (isAdmin || isUser) {
       localStorage.setItem("token", true);
-      localStorage.setItem("isAdmin", true);
+      localStorage.setItem("isAdmin", isAdmin ? true : false);
       setLoading(true);
       message.success({ content: "Login Success", duration: 1 });
       setTimeout(() => {
         setLoading(false);
-        navigate("/dashboard");
-      }, 1000);
-    } else if (isUser) {
-      localStorage.setItem("token", true);
-      localStorage.setItem("isAdmin", false);
-      setLoading(true);
-      message.success({ content: "Login Success", duration: 1 });
-      setTimeout(() => {
-        setLoading(false);
-        navigate("/home-page");
+        navigate(isAdmin ? "/dashboard" : "/home-page");
       }, 1000);
     } else {
       Modal.warning({
@@ -132,7 +131,6 @@ const LoginPage = () => {
       form.resetFields();
       setRadio("login");
       setLoading(false);
-      return;
     }
   };
 

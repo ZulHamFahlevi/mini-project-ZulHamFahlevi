@@ -5,6 +5,7 @@ import LoadingComponent from "../components/loadingComponent/LoadingComponent";
 import DashboardComponent from "../page/dashboard/DashboardComponent";
 import HomePage from "../page/homePage/HomePage";
 import ProductPage from "../page/productPage/ProductPage";
+import ProductDetail from "../page/productPage/productDetail/ProductDetail";
 import InputProductComponent from "./../page/inputProduct/InputProductComponent";
 import LoginPage from "./../page/loginPage/LoginPage";
 
@@ -41,6 +42,7 @@ const RouteManagement = () => {
             <Routes>
               <Route path="/home-page" element={<HomePage />} />
               <Route path="/product" element={<ProductPage />} />
+              <Route path="/product/:uuid" element={<ProductDetail />} />
             </Routes>
           </LayoutComponent>
         )}

@@ -2,6 +2,7 @@ import { Button, Card, Image, Space } from "antd";
 import React from "react";
 import { RUPIAH } from "../../../components/currency/index";
 import { formatDate } from "../../../components/dayjs";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({
   imageProduct,
@@ -46,18 +47,17 @@ const ProductCard = ({
             marginTop: "20px",
           }}
         >
-          <Button
-            type="primary"
-            onClick={() => {
-              console.log(uuid);
-            }}
-            style={{
-              width: "100%",
-              fontWeight: "bold",
-            }}
-          >
-            Detail
-          </Button>
+          <Link to={`/product/${uuid}`}>
+            <Button
+              type="primary"
+              style={{
+                width: "100%",
+                fontWeight: "bold",
+              }}
+            >
+              Detail
+            </Button>
+          </Link>
           <p
             style={{
               fontWeight: "bold",

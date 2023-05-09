@@ -22,6 +22,8 @@ const GET_PRODUCT_BY_PK = gql`
       productName
       productType
       imageProduct
+      productBrand
+      productStock
       productDescription
       productPrice
     }

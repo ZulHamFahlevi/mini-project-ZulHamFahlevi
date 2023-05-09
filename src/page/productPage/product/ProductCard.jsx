@@ -1,8 +1,8 @@
 import { Button, Card, Image, Space } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 import { RUPIAH } from "../../../components/currency/index";
 import { formatDate } from "../../../components/dayjs";
-import { Link } from "react-router-dom";
 
 const ProductCard = ({
   imageProduct,
@@ -25,7 +25,7 @@ const ProductCard = ({
         <h1
           style={{
             fontWeight: "bold",
-            color: "#1890ff",
+            color: "#5cdbd3",
           }}
         >
           {productName}

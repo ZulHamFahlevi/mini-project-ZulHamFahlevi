@@ -1,11 +1,11 @@
-import React from "react";
-import { GET_PRODUCT_BY_PK } from "../query/form-query";
-import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
-import { Button, Card, Col, Image, Row, Space } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { formatDate } from "../../../components/dayjs";
+import { Button, Card, Col, Image, Modal, Popconfirm, Row, Space } from "antd";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { RUPIAH } from "../../../components/currency";
+import { formatDate } from "../../../components/dayjs";
+import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
+import { GET_PRODUCT_BY_PK } from "../query/form-query";
 
 const ProductDetail = () => {
   const { uuid } = useParams();
@@ -160,18 +160,31 @@ const ProductDetail = () => {
                 {RUPIAH(dataProduct?.product_by_pk.productPrice)}
               </p>
             </Space>
-            <Button
-              type="primary"
-              style={{
-                width: "100%",
-                fontWeight: "bold",
-              }}
-              onClick={() => {
-                alert("Berhasil ditambahkan ke keranjang");
+            <Popconfirm
+              title="Konfirmasi Pesananan Anda"
+              description="Lanjutkan Pemesanan?"
+              onConfirm={() => {
+                //href to new tab whatsapp api, targer blank
+                window.open(`https://wa.link/1w3dwg`, "_blank");
+                Modal.success({
+                  title: "Success",
+                  content: "Terimakasih Telah Melakukan Pemesanan",
+                  onOk() {
+                    navigate("/product");
+                  },
+                });
               }}
             >
-              Add to Cart
-            </Button>
+              <Button
+                type="primary"
+                style={{
+                  width: "100%",
+                  fontWeight: "bold",
+                }}
+              >
+                Buat Pesanan
+              </Button>
+            </Popconfirm>
           </Card>
         </Col>
       </Row>

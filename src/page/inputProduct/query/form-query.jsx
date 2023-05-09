@@ -8,6 +8,8 @@ const GET_PRODUCT = gql`
       productName
       productType
       imageProduct
+      productBrand
+      productStock
       productDescription
       productPrice
     }
@@ -20,6 +22,8 @@ const ADD_PRODUCT = gql`
       productName
       productType
       imageProduct
+      productBrand
+      productStock
       productDescription
       productPrice
     }

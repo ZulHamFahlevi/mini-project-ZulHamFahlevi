@@ -302,7 +302,12 @@ const InputProductComponent = () => {
               ]}
             >
               <Select placeholder="Choose...">
-                <Select.Option value="Pakaian">Pakaian</Select.Option>
+                <Select.Option value="Pakaian Muslim Anak">
+                  Pakaian Muslim Anak
+                </Select.Option>
+                <Select.Option value="Pakaian Muslim Dewasa">
+                  Pakaian Muslim Dewasa
+                </Select.Option>
                 <Select.Option value="Perlengkapan Shalat">
                   Perlengkapan Shalat
                 </Select.Option>

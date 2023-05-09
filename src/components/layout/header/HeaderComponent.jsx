@@ -22,7 +22,7 @@ const HeaderComponent = ({ isAdmin }) => {
     <>
       <Header
         style={{
-          position: isAdmin === "false" ? "sticky" : "relative",
+          position: "sticky",
           top: 0,
           zIndex: 1,
           width: "100%",

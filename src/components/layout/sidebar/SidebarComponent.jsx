@@ -26,6 +26,12 @@ const Sidebar = () => {
         trigger={null}
         collapsible
         collapsed={collapsed}
+        style={{
+          overflow: "auto",
+          position: "relative",
+          left: 0,
+          zIndex: 1,
+        }}
       >
         <Menu
           className="menu-sidebar"
@@ -34,6 +40,13 @@ const Sidebar = () => {
           defaultSelectedKeys={"/dashboard"}
           selectedKeys={[current]}
           onClick={onClick}
+          style={{
+            height: "100vh",
+            borderRight: 0,
+            position: "fixed",
+            zIndex: 1,
+            width: collapsed ? 80 : 200,
+          }}
           items={[
             {
               key: "",
@@ -83,6 +96,8 @@ const Sidebar = () => {
             left: collapsed ? 20 : 150,
             width: 40,
             height: 40,
+            position: "fixed",
+            zIndex: 1,
           }}
         />
       </Sider>

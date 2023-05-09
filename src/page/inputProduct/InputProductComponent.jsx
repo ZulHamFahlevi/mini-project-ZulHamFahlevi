@@ -111,6 +111,16 @@ const InputProductComponent = () => {
       key: "productType",
     },
     {
+      title: "Product Brand",
+      dataIndex: "productBrand",
+      key: "productBrand",
+    },
+    {
+      title: "Product Stock",
+      dataIndex: "productStock",
+      key: "productStock",
+    },
+    {
       title: "Product Price",
       render: (record) => RUPIAH(record.productPrice),
       key: "productPrice",
@@ -148,6 +158,8 @@ const InputProductComponent = () => {
     form.setFieldsValue({
       productName: row_data.productName,
       productType: row_data.productType,
+      productBrand: row_data.productBrand,
+      productStock: row_data.productStock,
       productPrice: row_data.productPrice,
       productDescription: row_data.productDescription,
     });
@@ -350,6 +362,31 @@ const InputProductComponent = () => {
                   </span>
                 )}
               </span>
+            </Form.Item>
+            <Form.Item
+              className="input-product-form-item"
+              label="Product Brand"
+              name="productBrand"
+              rules={[
+                { required: true, message: "Please input product brand!" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className="input-product-form-item"
+              label="Product Stock"
+              name="productStock"
+              rules={[
+                { required: true, message: "Please input product brand!" },
+              ]}
+            >
+              <InputNumber
+                style={{
+                  width: "100%",
+                }}
+                min={1}
+              />
             </Form.Item>
             <Form.Item
               className="input-product-form-item"

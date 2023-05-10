@@ -8,10 +8,11 @@ import "./header.css";
 const HeaderComponent = ({ isAdmin }) => {
   const { Header } = Layout;
   const path = window.location.pathname;
-  const [current, setCurrent] = useState(path);
-  const onClick = (e) => {
-    setCurrent(e.key);
-  };
+  // const [current, setCurrent] = useState(path);
+
+  // const onClick = (e) => {
+  //   setCurrent(e.key);
+  // };
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -58,17 +59,17 @@ const HeaderComponent = ({ isAdmin }) => {
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                 }}
-                onClick={() => {
-                  setCurrent("");
-                }}
+                // onClick={() => {
+                //   setCurrent("");
+                // }}
               />
             </Link>
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={"home-page"}
-              onClick={onClick}
-              selectedKeys={[current]}
+              defaultSelectedKeys={["/home-page"]}
+              // onClick={onClick}
+              selectedKeys={[path]}
               items={MENU_ITEM}
               disabledOverflow
               style={{

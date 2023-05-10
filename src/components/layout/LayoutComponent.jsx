@@ -4,8 +4,6 @@ import FooterComponent from "./footer/FooterComponent";
 import HeaderComponent from "./header/HeaderComponent";
 import "./layout.css";
 import SidebarComponent from "./sidebar/SidebarComponent";
-import { GET_ADMIN } from "./query/profile-query";
-import { useQuery } from "@apollo/client";
 
 const LayoutComponent = ({ children }) => {
   const { Content } = Layout;
@@ -17,7 +15,14 @@ const LayoutComponent = ({ children }) => {
         {isAdmin === "true" && <SidebarComponent />}
         <Layout>
           <HeaderComponent isAdmin={isAdmin} />
-          <Content className="site-layout-background">{children}</Content>
+          <Content
+            className="site-layout-background"
+            style={{
+              padding: isAdmin === "true" ? "24px" : "20px 0",
+            }}
+          >
+            {children}
+          </Content>
           <FooterComponent />
           <Button
             className="btn-scroll-top"

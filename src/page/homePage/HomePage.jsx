@@ -1,11 +1,11 @@
 import React from "react";
+import HeroSection from "./heroSection/HeroSection";
 import CarouselComponent from "./carousel/CarouselComponent";
-import ProductCard from "../productPage/product/ProductCard";
-import { Row, Col } from "antd";
 
 const HomePage = () => {
   return (
     <>
+      <HeroSection />
       <CarouselComponent />
     </>
   );

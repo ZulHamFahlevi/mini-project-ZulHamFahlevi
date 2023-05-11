@@ -1,9 +1,5 @@
-.input-product-container {
-    justify-content: center;
-}
-
 .input-product-title {
-    text-align: center;
+    font-weight: 500;
 }
 
 .input-product-form-item {

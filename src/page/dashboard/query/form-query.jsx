@@ -14,4 +14,13 @@ const GET_PRODUCT = gql`
   }
 `;
 
-export { GET_PRODUCT };
+const GET_USER = gql`
+  query profile {
+    profile {
+      uuid,
+      username,
+    }
+  }
+`;
+
+export { GET_PRODUCT, GET_USER };

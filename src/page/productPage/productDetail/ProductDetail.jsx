@@ -18,6 +18,7 @@ import { RUPIAH, FORMAT_DATE } from "../../../helpers";
 import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
 import { GET_PRODUCT_BY_PK } from "../query/form-query";
 import styles from "./index.module.css";
+import Swal from "sweetalert2";
 
 const ProductDetail = () => {
   const { uuid } = useParams();
@@ -180,18 +181,18 @@ const ProductDetail = () => {
                     setLoadingPayment(true);
                     setTimeout(() => {
                       setLoadingPayment(false);
-                      Modal.success({
+                      Swal.fire({
                         title: "Success",
-                        content: (
-                          <div>
-                            <p>Pesanan Anda Berhasil</p>
-                            <p>Kembalian Anda: {RUPIAH(kembalian)}</p>
-                          </div>
-                        ),
-                        onOk() {
+                        html: `Pesanan Anda Berhasil <br/> Kembalian Anda: ${RUPIAH(
+                          kembalian
+                        )}`,
+                        icon: "success",
+                        confirmButtonText: "Ok",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
                           navigate("/product");
                           window.open("https://wa.link/3ez9vm", "_blank");
-                        },
+                        }
                       });
                     }, 1500);
                   }}

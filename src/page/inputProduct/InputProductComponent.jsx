@@ -28,6 +28,7 @@ import {
   GET_PRODUCT,
   UPDATE_PRODUCT,
 } from "./query/form-query";
+import Swal from "sweetalert2";
 
 const InputProductComponent = () => {
   const { TextArea } = Input;
@@ -201,14 +202,18 @@ const InputProductComponent = () => {
         });
       },
       onCompleted: () => {
-        Modal.success({
+        Swal.fire({
+          icon: "success",
           title: "Success",
-          content: "Success Edit Product",
-          onOk: () => {
-            setIsEdit(false);
+          text: "Success Edit Product",
+          confirmButtonText: `OK`,
+          confirmButtonColor: "#3085d6",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.resetFields();
+            setImageProduct("");
             setIsModalOpen(false);
-            onReset();
-          },
+          }
         });
       },
     });
@@ -232,9 +237,12 @@ const InputProductComponent = () => {
           });
         },
         onCompleted: () => {
-          Modal.success({
-            title: "Delete Data Berhasil",
-            content: "Data Berhasil Dihapus",
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Success Delete Product",
+            showConfirmButton: false,
+            timer: 1500,
           });
         },
       });
@@ -260,14 +268,18 @@ const InputProductComponent = () => {
         });
       },
       onCompleted: () => {
-        Modal.success({
+        Swal.fire({
+          icon: "success",
           title: "Success",
-          content: "Success Add Product",
-          onOk: () => {
+          text: "Success Add Product",
+          confirmButtonText: `OK`,
+          confirmButtonColor: "#3085d6",
+        }).then((result) => {
+          if (result.isConfirmed) {
             form.resetFields();
             setImageProduct("");
             setIsModalOpen(false);
-          },
+          }
         });
       },
     });

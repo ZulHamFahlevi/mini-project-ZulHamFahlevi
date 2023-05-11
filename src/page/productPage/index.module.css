@@ -2,6 +2,14 @@
     padding: 25px 20px;
 }
 
+.product-search {
+    width: 20%;
+}
+
+.product-search:active{
+    z-index: -1;
+}
+
 .product-list-item {
     display: flex;
     justify-content: center;

@@ -173,6 +173,7 @@ const ProductDetail = () => {
             <Spin spinning={loadingPayment}>
               <Space className={styles["content-order__button"]}>
                 <Popconfirm
+                  disabled={payment < totalPrice || count === 0}
                   className={styles["content-order__button-popconfirm"]}
                   title="Konfirmasi Pesananan Anda"
                   description="Lanjutkan Pemesanan?"

@@ -36,6 +36,17 @@ const InputProductComponent = () => {
   const [imageProduct, setImageProduct] = useState("");
   const [form] = Form.useForm();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   //onReset Form
   const onReset = () => {
     form.resetFields();
@@ -153,6 +164,7 @@ const InputProductComponent = () => {
   //handle edit
   const handleEdit = (row_data) => {
     setIsEdit(true);
+    setIsModalOpen(true);
     setRowData(row_data);
     setImageProduct(row_data.imageProduct);
     form.setFieldsValue({
@@ -168,6 +180,7 @@ const InputProductComponent = () => {
   //handle cancel edit
   const handleCancelEdit = () => {
     setIsEdit(false);
+    setIsModalOpen(false);
     setRowData();
     onReset();
   };
@@ -193,6 +206,7 @@ const InputProductComponent = () => {
           content: "Success Edit Product",
           onOk: () => {
             setIsEdit(false);
+            setIsModalOpen(false);
             onReset();
           },
         });
@@ -252,6 +266,7 @@ const InputProductComponent = () => {
           onOk: () => {
             form.resetFields();
             setImageProduct("");
+            setIsModalOpen(false);
           },
         });
       },
@@ -275,189 +290,200 @@ const InputProductComponent = () => {
   return (
     <>
       <Row className={styles["input-product-container"]} gutter={[16, 16]}>
-        <Col span={8}>
-          <h1 className={styles["input-product-title"]}>Input Product</h1>
-          <Form
-            className="input-product-form"
-            name="inputProduct"
-            onFinish={isEdit ? onEdit : onAdd}
-            layout="vertical"
-            form={form}
+        <Col span={4}>
+          <Button type="primary" onClick={showModal}>
+            <p className={styles["input-product-title"]}>Input Product</p>
+          </Button>
+          <Modal
+            title="Basic Modal"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={null}
           >
-            <Form.Item
-              className="input-product-form-item"
-              label="Product Name"
-              name="productName"
-              rules={[
-                { required: true, message: "Please input product name!" },
-              ]}
+            <Form
+              className="input-product-form"
+              name="inputProduct"
+              onFinish={isEdit ? onEdit : onAdd}
+              layout="vertical"
+              form={form}
             >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              className="input-product-form-item"
-              label="Product Type"
-              name="productType"
-              rules={[
-                { required: true, message: "Please input product type!" },
-              ]}
-            >
-              <Select placeholder="Choose...">
-                <Select.Option value="Pakaian Muslim Anak">
-                  Pakaian Muslim Anak
-                </Select.Option>
-                <Select.Option value="Pakaian Muslim Dewasa">
-                  Pakaian Muslim Dewasa
-                </Select.Option>
-                <Select.Option value="Perlengkapan Shalat">
-                  Perlengkapan Shalat
-                </Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              className="input-product-form-item"
-              label="Image Product"
-            >
-              <Upload
-                showUploadList={false}
-                name="file"
-                maxCount={1}
-                customRequest={() => {}}
-                onChange={handleUpload}
-                accept="image/*"
+              <Form.Item
+                className="input-product-form-item"
+                label="Product Name"
+                name="productName"
+                rules={[
+                  { required: true, message: "Please input product name!" },
+                ]}
               >
-                <Button
-                  icon={<UploadOutlined />}
-                  type={!imageProduct ? "dashed" : "default"}
-                  loading={isLoadingUpload}
+                <Input />
+              </Form.Item>
+              <Form.Item
+                className="input-product-form-item"
+                label="Product Type"
+                name="productType"
+                rules={[
+                  { required: true, message: "Please input product type!" },
+                ]}
+              >
+                <Select placeholder="Choose...">
+                  <Select.Option value="Pakaian Muslim Anak">
+                    Pakaian Muslim Anak
+                  </Select.Option>
+                  <Select.Option value="Pakaian Muslim Dewasa">
+                    Pakaian Muslim Dewasa
+                  </Select.Option>
+                  <Select.Option value="Perlengkapan Shalat">
+                    Perlengkapan Shalat
+                  </Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                className="input-product-form-item"
+                label="Image Product"
+              >
+                <Upload
+                  showUploadList={false}
+                  name="file"
+                  maxCount={1}
+                  customRequest={() => {}}
+                  onChange={handleUpload}
+                  accept="image/*"
                 >
-                  {imageProduct ? "Change Image" : "Upload Image"}
-                </Button>
-              </Upload>
-              <span
-                className={styles["input-product-form-item-image"]}
-                style={{
-                  display: "flex",
-                  justifyContent: "start",
-                  marginTop: "10px",
-                }}
-              >
-                {imageProduct && (
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
+                  <Button
+                    icon={<UploadOutlined />}
+                    type={!imageProduct ? "dashed" : "default"}
+                    loading={isLoadingUpload}
                   >
-                    <Card className="input-product-form-item-image">
-                      <Image
-                        src={imageProduct}
-                        alt="imageProduct"
-                        width={200}
-                      />
-                    </Card>
-                    <Button
-                      type="primary"
-                      danger
-                      onClick={() => setImageProduct("")}
+                    {imageProduct ? "Change Image" : "Upload Image"}
+                  </Button>
+                </Upload>
+                <span
+                  className={styles["input-product-form-item-image"]}
+                  style={{
+                    display: "flex",
+                    justifyContent: "start",
+                    marginTop: "10px",
+                  }}
+                >
+                  {imageProduct && (
+                    <span
                       style={{
-                        marginLeft: "10px",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
-                      <DeleteFilled />
+                      <Card className="input-product-form-item-image">
+                        <Image
+                          src={imageProduct}
+                          alt="imageProduct"
+                          width={200}
+                        />
+                      </Card>
+                      <Button
+                        type="primary"
+                        danger
+                        onClick={() => setImageProduct("")}
+                        style={{
+                          marginLeft: "10px",
+                        }}
+                      >
+                        <DeleteFilled />
+                      </Button>
+                    </span>
+                  )}
+                </span>
+              </Form.Item>
+              <Form.Item
+                className="input-product-form-item"
+                label="Product Brand"
+                name="productBrand"
+                rules={[
+                  { required: true, message: "Please input product brand!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                className="input-product-form-item"
+                label="Product Stock"
+                name="productStock"
+                rules={[
+                  { required: true, message: "Please input product brand!" },
+                ]}
+              >
+                <InputNumber
+                  style={{
+                    width: "100%",
+                  }}
+                  min={1}
+                />
+              </Form.Item>
+              <Form.Item
+                className="input-product-form-item"
+                label="Product Price"
+                name="productPrice"
+                rules={[
+                  { required: true, message: "Please input product price!" },
+                ]}
+              >
+                <InputNumber
+                  placeholder="Rp"
+                  style={{
+                    width: "100%",
+                  }}
+                  min={1}
+                />
+              </Form.Item>
+              <Form.Item
+                className="input-product-form-item"
+                label="Product Description"
+                name="productDescription"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input product description!",
+                  },
+                ]}
+              >
+                <TextArea rows={4} />
+              </Form.Item>
+              {isEdit ? (
+                <Form.Item>
+                  <Space>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      loading={editProductLoading}
+                    >
+                      Save
                     </Button>
-                  </span>
-                )}
-              </span>
-            </Form.Item>
-            <Form.Item
-              className="input-product-form-item"
-              label="Product Brand"
-              name="productBrand"
-              rules={[
-                { required: true, message: "Please input product brand!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              className="input-product-form-item"
-              label="Product Stock"
-              name="productStock"
-              rules={[
-                { required: true, message: "Please input product brand!" },
-              ]}
-            >
-              <InputNumber
-                style={{
-                  width: "100%",
-                }}
-                min={1}
-              />
-            </Form.Item>
-            <Form.Item
-              className="input-product-form-item"
-              label="Product Price"
-              name="productPrice"
-              rules={[
-                { required: true, message: "Please input product price!" },
-              ]}
-            >
-              <InputNumber
-                placeholder="Rp"
-                style={{
-                  width: "100%",
-                }}
-                min={1}
-              />
-            </Form.Item>
-            <Form.Item
-              className="input-product-form-item"
-              label="Product Description"
-              name="productDescription"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input product description!",
-                },
-              ]}
-            >
-              <TextArea rows={4} />
-            </Form.Item>
-            {isEdit ? (
-              <Form.Item>
-                <Space>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={editProductLoading}
-                  >
-                    Save
-                  </Button>
-                  <Button type="primary" danger onClick={handleCancelEdit}>
-                    Cancel
-                  </Button>
-                </Space>
-              </Form.Item>
-            ) : (
-              <Form.Item>
-                <Space>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={addProductLoading}
-                  >
-                    Submit
-                  </Button>
-                  <Button htmlType="button" onClick={onReset}>
-                    Reset
-                  </Button>
-                </Space>
-              </Form.Item>
-            )}
-          </Form>
+                    <Button type="primary" danger onClick={handleCancelEdit}>
+                      Cancel
+                    </Button>
+                  </Space>
+                </Form.Item>
+              ) : (
+                <Form.Item>
+                  <Space>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      loading={addProductLoading}
+                    >
+                      Submit
+                    </Button>
+                    <Button htmlType="button" onClick={onReset}>
+                      Reset
+                    </Button>
+                  </Space>
+                </Form.Item>
+              )}
+            </Form>
+          </Modal>
         </Col>
-        <Col span={20}>
+
+        <Col span={24}>
           <Table
             rowKey={(record) => record.uuid}
             columns={TABLE_COLUMNS}

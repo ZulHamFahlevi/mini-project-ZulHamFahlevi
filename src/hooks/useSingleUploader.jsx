@@ -1,7 +1,6 @@
-import { useCallback } from "react";
-import { useState } from "react";
-import { api } from "../api";
 import { message } from "antd";
+import { useCallback, useState } from "react";
+import { api } from "../api";
 
 export const useSingleUploader = () => {
   const [isLoading, setIsLoading] = useState(false);

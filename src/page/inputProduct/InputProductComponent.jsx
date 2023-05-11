@@ -18,6 +18,7 @@ import {
   message,
 } from "antd";
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { RUPIAH } from "../../helpers";
 import { uploaderConfig } from "./../../config/uploader-config";
 import { useSingleUploader } from "./../../hooks/useSingleUploader";
@@ -28,7 +29,6 @@ import {
   GET_PRODUCT,
   UPDATE_PRODUCT,
 } from "./query/form-query";
-import Swal from "sweetalert2";
 
 const InputProductComponent = () => {
   const { TextArea } = Input;
@@ -294,7 +294,6 @@ const InputProductComponent = () => {
       api_key: uploaderConfig.api_key,
     };
     uploadFile(body, (data) => {
-      console.log({ data });
       setImageProduct(data.url);
     });
   };

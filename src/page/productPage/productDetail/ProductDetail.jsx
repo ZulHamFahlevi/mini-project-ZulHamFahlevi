@@ -4,22 +4,20 @@ import {
   Card,
   Col,
   Image,
-  Input,
   InputNumber,
-  Modal,
   Popconfirm,
   Row,
   Space,
   Spin,
 } from "antd";
 import React, { useEffect, useState } from "react";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
-import { RUPIAH, FORMAT_DATE } from "../../../helpers";
+import Swal from "sweetalert2";
 import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
+import { FORMAT_DATE, RUPIAH } from "../../../helpers";
 import { GET_PRODUCT_BY_PK } from "../query/form-query";
 import styles from "./index.module.css";
-import Swal from "sweetalert2";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const ProductDetail = () => {
   const { uuid } = useParams();

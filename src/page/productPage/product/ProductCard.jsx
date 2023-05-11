@@ -1,7 +1,7 @@
 import { Button, Card, Image, Space } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import { RUPIAH, FORMAT_DATE } from "../../../helpers";
+import { FORMAT_DATE, RUPIAH } from "../../../helpers";
 import styles from "./index.module.css";
 
 const ProductCard = ({

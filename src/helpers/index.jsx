@@ -18,3 +18,4 @@ const FORMAT_DATE = (date) => {
 };
 
 export { RUPIAH, FORMAT_DATE };
+

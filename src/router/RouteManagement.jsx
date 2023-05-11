@@ -1,6 +1,7 @@
-import { Button, Result } from "antd";
+import { Button } from "antd";
 import { Suspense, useEffect } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import PageNotFound from "../components/404/PageNotFound";
 import LayoutComponent from "../components/layout/LayoutComponent";
 import LoadingComponent from "../components/loadingComponent/LoadingComponent";
 import DashboardComponent from "../page/dashboard/DashboardComponent";
@@ -9,7 +10,6 @@ import ProductPage from "../page/productPage/ProductPage";
 import ProductDetail from "../page/productPage/productDetail/ProductDetail";
 import InputProductComponent from "./../page/inputProduct/InputProductComponent";
 import LoginPage from "./../page/loginPage/LoginPage";
-import PageNotFound from "../components/404/PageNotFound";
 
 const RouteManagement = () => {
   const token = localStorage.getItem("token");

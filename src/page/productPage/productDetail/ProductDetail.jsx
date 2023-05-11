@@ -10,6 +10,7 @@ import {
   Popconfirm,
   Row,
   Space,
+  Spin,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,6 +23,7 @@ import styles from "./index.module.css";
 const ProductDetail = () => {
   const { uuid } = useParams();
   const navigate = useNavigate();
+  const [loadingPayment, setLoadingPayment] = useState(false);
 
   //get data product by uuid
   const {
@@ -38,6 +40,8 @@ const ProductDetail = () => {
     dataProduct?.product_by_pk.productPrice
   );
   const [payment, setPayment] = useState(0);
+
+  const kembalian = payment - totalPrice;
 
   const decrement = () => {
     if (count > 0) {
@@ -166,34 +170,46 @@ const ProductDetail = () => {
                 placeholder="Masukan Nominal Pembayaran"
               />
             </Space>
-            <Space className={styles["content-order__button"]}>
-              <Popconfirm
-                className={styles["content-order__button-popconfirm"]}
-                title="Konfirmasi Pesananan Anda"
-                description="Lanjutkan Pemesanan?"
-                onConfirm={() => {
-                  Modal.success({
-                    title: "Success",
-                    content: "Terimakasih Telah Melakukan Pemesanan",
-                    onOk() {
-                      navigate("/product");
-                      window.open("https://wa.link/3ez9vm", "_blank");
-                    },
-                  });
-                }}
-              >
-                <Button
-                  className={styles["content-order__button-confirm"]}
+            <Spin spinning={loadingPayment}>
+              <Space className={styles["content-order__button"]}>
+                <Popconfirm
                   disabled={payment < totalPrice || count === 0}
-                  type="primary"
-                  style={{
-                    width: "310px",
+                  className={styles["content-order__button-popconfirm"]}
+                  title="Konfirmasi Pesananan Anda"
+                  description="Lanjutkan Pemesanan?"
+                  onConfirm={() => {
+                    setLoadingPayment(true);
+                    setTimeout(() => {
+                      setLoadingPayment(false);
+                      Modal.success({
+                        title: "Success",
+                        content: (
+                          <div>
+                            <p>Pesanan Anda Berhasil</p>
+                            <p>Kembalian Anda: {RUPIAH(kembalian)}</p>
+                          </div>
+                        ),
+                        onOk() {
+                          navigate("/product");
+                          window.open("https://wa.link/3ez9vm", "_blank");
+                        },
+                      });
+                    }, 1500);
                   }}
                 >
-                  Buat Pesanan
-                </Button>
-              </Popconfirm>
-            </Space>
+                  <Button
+                    className={styles["content-order__button-confirm"]}
+                    disabled={payment < totalPrice || count === 0}
+                    type="primary"
+                    style={{
+                      width: "310px",
+                    }}
+                  >
+                    Buat Pesanan
+                  </Button>
+                </Popconfirm>
+              </Space>
+            </Spin>
           </Card>
         </Col>
       </Row>

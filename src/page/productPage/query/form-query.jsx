@@ -6,9 +6,8 @@ const GET_PRODUCT = gql`
       uuid
       timeStamp
       productName
-      productType
+      productBrand
       imageProduct
-      productDescription
       productPrice
     }
   }

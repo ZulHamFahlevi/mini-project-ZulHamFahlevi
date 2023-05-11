@@ -1,10 +1,10 @@
 import React from "react";
 import { Spin } from "antd";
-import "./loadingComponent.css";
+import stles from "./index.module.css";
 
 const LoadingComponent = () => {
   return (
-    <div className="loading-container">
+    <div className={stles["loading"]}>
       <Spin size="large" tip="loading..." />
     </div>
   );

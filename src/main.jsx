@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import "./index.css";
+import "./global.css";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { ThemeConfig } from "./theme/ThemeConfig.jsx";

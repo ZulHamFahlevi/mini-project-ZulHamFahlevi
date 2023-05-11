@@ -1,8 +1,9 @@
-import { Col, Row } from "antd";
-import React from "react";
-import "./information.css";
-import { GET_PRODUCT } from "../query/form-query";
+import { ShopOutlined } from "@ant-design/icons";
 import { useQuery } from "@apollo/client";
+import { Col, Row, Space } from "antd";
+import React from "react";
+import { GET_PRODUCT } from "../query/form-query";
+import styles from "./index.module.css";
 
 const Information = () => {
   const {
@@ -13,11 +14,27 @@ const Information = () => {
 
   return (
     <>
-      <Row className="information-container">
-        <Col span={6}>
-          <div className="information-card">
-            <p className="information-title">number of products</p>
-            <p className="information-number">{dataProduct?.product.length}</p>
+      <Row gutter={16} className={styles["information"]}>
+        <Col span={4}>
+          <div className={styles["information__card"]}>
+            <Space className={styles["information__card-header"]}>
+              <ShopOutlined className={styles["card-header__icon"]} />
+              <p className={styles["card-header__title"]}>Total Product</p>
+            </Space>
+            <p className={styles["information__card-value"]}>
+              {dataProduct?.product.length}
+            </p>
+          </div>
+        </Col>
+        <Col span={4}>
+          <div className={styles["information__card"]}>
+            <Space className={styles["information__card-header"]}>
+              <ShopOutlined className={styles["card-header__icon"]} />
+              <p className={styles["card-header__title"]}>Jumlah User</p>
+            </Space>
+            <p className={styles["information__card-value"]}>
+              {dataProduct?.product.length}
+            </p>
           </div>
         </Col>
       </Row>

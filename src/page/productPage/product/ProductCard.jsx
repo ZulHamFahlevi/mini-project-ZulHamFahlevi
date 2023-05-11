@@ -3,67 +3,36 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { RUPIAH } from "../../../components/currency/index";
 import { formatDate } from "../../../components/dayjs";
+import styles from "./index.module.css";
 
 const ProductCard = ({
   imageProduct,
   productName,
   productPrice,
-  productType,
+  productBrand,
   timeStamp,
   uuid,
 }) => {
   return (
     <>
       <Card
+        className={styles["product-card"]}
         hoverable
-        style={{
-          width: 280,
-          marginBottom: "20px",
-        }}
-        cover={<Image alt="example" src={imageProduct} />}
+        cover={<Image alt="image product" src={imageProduct} />}
       >
-        <h1
-          style={{
-            fontWeight: "bold",
-            color: "#5cdbd3",
-          }}
-        >
-          {productName}
-        </h1>
-        <Space
-          style={{
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <p>{productType}</p>
-          <p>{RUPIAH(productPrice)}</p>
-        </Space>
-
-        <Space
-          style={{
-            width: "100%",
-            justifyContent: "space-between",
-            marginTop: "20px",
-          }}
-        >
+        <h1 className={styles["product-card__title"]}>{productName}</h1>
+        <p className={styles["product-card__brand"]}>{productBrand}</p>
+        <p className={styles["product-card__price"]}>{RUPIAH(productPrice)}</p>
+        <Space className={styles["product-card__action"]}>
           <Link to={`/product/${uuid}`}>
             <Button
+              className={styles["product-card__action__button"]}
               type="primary"
-              style={{
-                width: "100%",
-                fontWeight: "bold",
-              }}
             >
               Detail
             </Button>
           </Link>
-          <p
-            style={{
-              fontWeight: "bold",
-              textAlign: "end",
-            }}
-          >
+          <p className={styles["product-card__action__date"]}>
             {formatDate(timeStamp)}
           </p>
         </Space>

@@ -2,8 +2,8 @@ import { ArrowUpOutlined } from "@ant-design/icons";
 import { Button, Layout } from "antd";
 import FooterComponent from "./footer/FooterComponent";
 import HeaderComponent from "./header/HeaderComponent";
-import "./layout.css";
 import SidebarComponent from "./sidebar/SidebarComponent";
+import styles from "./index.module.css";
 
 const LayoutComponent = ({ children }) => {
   const { Content } = Layout;
@@ -11,21 +11,21 @@ const LayoutComponent = ({ children }) => {
 
   return (
     <>
-      <Layout className="site-layout">
+      <Layout className={styles["layout"]}>
         {isAdmin === "true" && <SidebarComponent />}
         <Layout>
           <HeaderComponent isAdmin={isAdmin} />
           <Content
-            className="site-layout-background"
+            className={styles["layout-content"]}
             style={{
-              padding: isAdmin === "true" ? "24px" : "20px 0",
+              padding: isAdmin === "true" ? "24px" : "0",
             }}
           >
             {children}
           </Content>
           <FooterComponent />
           <Button
-            className="btn-scroll-top"
+            className={styles["layout-content__button"]}
             type="primary"
             shape="circle"
             icon={<ArrowUpOutlined />}

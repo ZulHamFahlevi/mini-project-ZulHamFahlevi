@@ -1,4 +1,8 @@
-.input-product-title-form {
+.input-product-container {
+    justify-content: center;
+}
+
+.input-product-title {
     text-align: center;
 }
 
@@ -11,6 +15,6 @@
     text-align: center;
 }
 
-.input-product-form-item-button-submit{
+.input-product-form-item-button-submit {
     width: 100%;
 }

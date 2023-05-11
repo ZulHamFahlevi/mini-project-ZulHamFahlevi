@@ -1,0 +1,42 @@
+.header__admin {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: var(--color-white);
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.header__user {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-primary);
+}
+
+.header__button-logout {
+    font-weight: semi-bold;
+    font-size: 18px;
+}
+
+.header__logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header__menu {
+    border: none;
+    background-color: var(--color-primary);
+}

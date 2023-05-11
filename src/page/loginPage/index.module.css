@@ -1,4 +1,4 @@
-.container-center {
+.container-card {
     margin: 0;
     position: absolute;
     top: 50%;
@@ -8,10 +8,10 @@
     box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
 }
 
-.card-login {
+.container-card__login {
     width: 400px;
 }
 
-.radio-group-login {
+.login__radio-group {
     text-transform: uppercase;
 }

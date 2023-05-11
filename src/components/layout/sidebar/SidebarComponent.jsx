@@ -3,12 +3,12 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, Space } from "antd";
+import { Button, Layout, Menu } from "antd";
 import React, { useState } from "react";
-import { MENU_ITEM } from "./constants";
-import "./sidebar.css";
 import { Link } from "react-router-dom";
-import { AlfatihIcon2 } from "../../../assets";
+import { AlfatihIcon } from "../../../assets";
+import { MENU_ITEM } from "./constants";
+import styles from "./index.module.css";
 
 const Sidebar = () => {
   const { Sider } = Layout;
@@ -22,28 +22,19 @@ const Sidebar = () => {
   return (
     <>
       <Sider
-        className="site-layout-background-sidebar"
+        className={styles["sidebar"]}
         trigger={null}
         collapsible
         collapsed={collapsed}
-        style={{
-          overflow: "auto",
-          position: "relative",
-          left: 0,
-          zIndex: 1,
-        }}
       >
         <Menu
-          className="menu-sidebar"
-          theme="dark"
+          className={styles["sidebar__menu"]}
+          theme="light"
           mode="inline"
           defaultSelectedKeys={"/dashboard"}
           selectedKeys={[current]}
           onClick={onClick}
           style={{
-            height: "100vh",
-            borderRight: 0,
-            position: "fixed",
             zIndex: 1,
             width: collapsed ? 80 : 200,
           }}
@@ -53,30 +44,21 @@ const Sidebar = () => {
               label: (
                 <Link to="/dashboard">
                   <div
+                    className={styles["sidebar__menu-logo"]}
                     style={{
-                      height: 30,
-                      display: "flex",
-                      justifyContent: "flex-start",
                       alignItems: collapsed ? "flex-start" : "center",
                     }}
                     onClick={() => setCurrent("")}
                   >
                     {collapsed ? (
                       <FontColorsOutlined
-                        style={{
-                          fontSize: 20,
-                          color: "#fff",
-                          transition: "all 0.3s ease",
-                        }}
+                        className={styles["sidebar__menu-logo-icon"]}
                       />
                     ) : (
                       <img
-                        src={AlfatihIcon2}
+                        className={styles["sidebar__menu-logo-image"]}
+                        src={AlfatihIcon}
                         alt="icon"
-                        style={{
-                          width: 90,
-                          transition: "all 0.3s ",
-                        }}
                       />
                     )}
                   </div>
@@ -87,7 +69,7 @@ const Sidebar = () => {
           ]}
         />
         <Button
-          className="btn-collapse"
+          className={styles["sidebar__button"]}
           type="primary"
           shape="circle"
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -96,8 +78,6 @@ const Sidebar = () => {
             left: collapsed ? 20 : 150,
             width: 40,
             height: 40,
-            position: "fixed",
-            zIndex: 1,
           }}
         />
       </Sider>

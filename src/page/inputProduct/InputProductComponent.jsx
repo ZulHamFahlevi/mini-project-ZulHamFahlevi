@@ -18,16 +18,16 @@ import {
   message,
 } from "antd";
 import { useState } from "react";
-import { RUPIAH } from "../../components/currency";
+import { RUPIAH } from "../../helpers";
 import { uploaderConfig } from "./../../config/uploader-config";
 import { useSingleUploader } from "./../../hooks/useSingleUploader";
+import styles from "./index.module.css";
 import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   GET_PRODUCT,
   UPDATE_PRODUCT,
 } from "./query/form-query";
-import styles from "./index.module.css";
 
 const InputProductComponent = () => {
   const { TextArea } = Input;

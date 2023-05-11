@@ -14,8 +14,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { RUPIAH } from "../../../components/currency";
-import { formatDate } from "../../../components/dayjs";
+import { RUPIAH, FORMAT_DATE } from "../../../helpers";
 import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
 import { GET_PRODUCT_BY_PK } from "../query/form-query";
 import styles from "./index.module.css";
@@ -90,7 +89,7 @@ const ProductDetail = () => {
                 {dataProduct?.product_by_pk.productName}
               </h1>
               <p className={styles["content-detail__header-date"]}>
-                {formatDate(dataProduct?.product_by_pk.timeStamp)}
+                {FORMAT_DATE(dataProduct?.product_by_pk.timeStamp)}
               </p>
             </Space>
             <Space

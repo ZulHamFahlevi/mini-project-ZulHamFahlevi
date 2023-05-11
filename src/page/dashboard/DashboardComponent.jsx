@@ -1,11 +1,11 @@
+import ChartComponent from "./chart/ChartComponent";
 import Information from "./information/Information";
-import ProductList from "./productList/ProductList";
 
 const DashboardComponent = () => {
   return (
     <>
       <Information />
-      <ProductList />
+      <ChartComponent />
     </>
   );
 };

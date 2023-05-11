@@ -1,5 +1,6 @@
+import { Button, Result } from "antd";
 import { Suspense, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import LayoutComponent from "../components/layout/LayoutComponent";
 import LoadingComponent from "../components/loadingComponent/LoadingComponent";
 import DashboardComponent from "../page/dashboard/DashboardComponent";
@@ -8,6 +9,7 @@ import ProductPage from "../page/productPage/ProductPage";
 import ProductDetail from "../page/productPage/productDetail/ProductDetail";
 import InputProductComponent from "./../page/inputProduct/InputProductComponent";
 import LoginPage from "./../page/loginPage/LoginPage";
+import PageNotFound from "../components/404/PageNotFound";
 
 const RouteManagement = () => {
   const token = localStorage.getItem("token");
@@ -35,6 +37,20 @@ const RouteManagement = () => {
                 path="/input-product"
                 element={<InputProductComponent />}
               />
+              //page not found
+              <Route
+                path="*"
+                element={
+                  <PageNotFound
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={
+                      <Link to="/dashboard">
+                        <Button type="primary">Back To Dashboard</Button>
+                      </Link>
+                    }
+                  />
+                }
+              />
             </Routes>
           </LayoutComponent>
         ) : (
@@ -43,6 +59,19 @@ const RouteManagement = () => {
               <Route path="/home-page" element={<HomePage />} />
               <Route path="/product" element={<ProductPage />} />
               <Route path="/product/:uuid" element={<ProductDetail />} />
+              <Route
+                path="*"
+                element={
+                  <PageNotFound
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={
+                      <Link to="/home-page">
+                        <Button type="primary">Back Home</Button>
+                      </Link>
+                    }
+                  />
+                }
+              />
             </Routes>
           </LayoutComponent>
         )}

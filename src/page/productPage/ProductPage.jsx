@@ -6,6 +6,7 @@ import LoadingComponent from "./../../components/loadingComponent/LoadingCompone
 import styles from "./index.module.css";
 import ProductCard from "./product/ProductCard";
 import { GET_PRODUCT } from "./query/form-query";
+import PageNotFound from "../../components/404/PageNotFound";
 
 const ProductPage = () => {
   const {
@@ -73,7 +74,7 @@ const ProductPage = () => {
         />
       ) : (
         <Row justify="center">
-          <Result status="404" subTitle="Product not found" />
+          <PageNotFound subTitle="Sorry, the product you search does not exist." />
         </Row>
       )}
     </div>

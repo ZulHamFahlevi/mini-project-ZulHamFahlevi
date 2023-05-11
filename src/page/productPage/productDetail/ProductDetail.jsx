@@ -19,6 +19,7 @@ import LoadingComponent from "../../../components/loadingComponent/LoadingCompon
 import { GET_PRODUCT_BY_PK } from "../query/form-query";
 import styles from "./index.module.css";
 import Swal from "sweetalert2";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const ProductDetail = () => {
   const { uuid } = useParams();
@@ -107,7 +108,9 @@ const ProductDetail = () => {
             <p className={styles["content-detail__description"]}>
               <b>Deskripsi:</b>
               <br />
-              {dataProduct?.product_by_pk.productDescription}
+              <ReactMarkdown>
+                {dataProduct?.product_by_pk.productDescription}
+              </ReactMarkdown>
             </p>
           </Card>
         </Col>

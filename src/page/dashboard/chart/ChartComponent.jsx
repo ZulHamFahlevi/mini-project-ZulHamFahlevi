@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import { Column } from "@ant-design/plots";
-import { Col, Row } from "antd";
-
-import { GET_PRODUCT } from "../query/form-query";
 import { useQuery } from "@apollo/client";
+import { Col, Row } from "antd";
+import React, { useState } from "react";
+import { GET_PRODUCT } from "../query/form-query";
 import LoadingComponent from "./../../../components/loadingComponent/LoadingComponent";
 
 const ChartComponent = () => {
@@ -14,8 +13,6 @@ const ChartComponent = () => {
   } = useQuery(GET_PRODUCT);
 
   const [productType, setProductType] = useState([]);
-
-  console.log(productType);
 
   //memisah kan productType tanpa duplikat
   dataProduct?.product?.map((item) => {

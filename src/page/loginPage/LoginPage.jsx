@@ -8,8 +8,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Button, Card, Form, Input, Modal, Radio, Spin, message } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
 import styles from "./index.module.css";
+import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
 
 const LoginPage = () => {
   const navigate = useNavigate();

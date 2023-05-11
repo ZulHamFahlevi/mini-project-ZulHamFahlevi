@@ -1,7 +1,7 @@
-import React from "react";
 import { Layout } from "antd";
+import React from "react";
+import styles from "./index.module.css";
 const { Footer } = Layout;
-import styles from "./index.module.css"
 
 const FooterComponent = () => {
   return (

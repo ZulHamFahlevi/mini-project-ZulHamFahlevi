@@ -1,12 +1,12 @@
-import { useQuery } from "@apollo/client";
-import { Input, List, Result, Row } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { useQuery } from "@apollo/client";
+import { Input, List, Row } from "antd";
 import React, { useState } from "react";
+import PageNotFound from "../../components/404/PageNotFound";
 import LoadingComponent from "./../../components/loadingComponent/LoadingComponent";
 import styles from "./index.module.css";
 import ProductCard from "./product/ProductCard";
 import { GET_PRODUCT } from "./query/form-query";
-import PageNotFound from "../../components/404/PageNotFound";
 
 const ProductPage = () => {
   const {

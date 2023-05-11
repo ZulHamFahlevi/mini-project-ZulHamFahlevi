@@ -4,19 +4,18 @@ import {
   Card,
   Col,
   Image,
-  Input,
   InputNumber,
-  Modal,
   Popconfirm,
   Row,
   Space,
   Spin,
 } from "antd";
 import React, { useEffect, useState } from "react";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
-import { RUPIAH } from "../../../components/currency";
-import { formatDate } from "../../../components/dayjs";
+import Swal from "sweetalert2";
 import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
+import { FORMAT_DATE, RUPIAH } from "../../../helpers";
 import { GET_PRODUCT_BY_PK } from "../query/form-query";
 import styles from "./index.module.css";
 
@@ -90,7 +89,7 @@ const ProductDetail = () => {
                 {dataProduct?.product_by_pk.productName}
               </h1>
               <p className={styles["content-detail__header-date"]}>
-                {formatDate(dataProduct?.product_by_pk.timeStamp)}
+                {FORMAT_DATE(dataProduct?.product_by_pk.timeStamp)}
               </p>
             </Space>
             <Space
@@ -107,7 +106,9 @@ const ProductDetail = () => {
             <p className={styles["content-detail__description"]}>
               <b>Deskripsi:</b>
               <br />
-              {dataProduct?.product_by_pk.productDescription}
+              <ReactMarkdown>
+                {dataProduct?.product_by_pk.productDescription}
+              </ReactMarkdown>
             </p>
           </Card>
         </Col>
@@ -181,18 +182,18 @@ const ProductDetail = () => {
                     setLoadingPayment(true);
                     setTimeout(() => {
                       setLoadingPayment(false);
-                      Modal.success({
+                      Swal.fire({
                         title: "Success",
-                        content: (
-                          <div>
-                            <p>Pesanan Anda Berhasil</p>
-                            <p>Kembalian Anda: {RUPIAH(kembalian)}</p>
-                          </div>
-                        ),
-                        onOk() {
+                        html: `Pesanan Anda Berhasil <br/> Kembalian Anda: ${RUPIAH(
+                          kembalian
+                        )}`,
+                        icon: "success",
+                        confirmButtonText: "Ok",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
                           navigate("/product");
                           window.open("https://wa.link/3ez9vm", "_blank");
-                        },
+                        }
                       });
                     }, 1500);
                   }}

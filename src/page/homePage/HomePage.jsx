@@ -1,6 +1,6 @@
 import React from "react";
-import HeroSection from "./heroSection/HeroSection";
 import CarouselComponent from "./carousel/CarouselComponent";
+import HeroSection from "./heroSection/HeroSection";
 
 const HomePage = () => {
   return (

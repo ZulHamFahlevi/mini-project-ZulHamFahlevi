@@ -1,5 +1,5 @@
-import React from "react";
 import { Spin } from "antd";
+import React from "react";
 import stles from "./index.module.css";
 
 const LoadingComponent = () => {

@@ -1,8 +1,7 @@
 import { Button, Card, Image, Space } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import { RUPIAH } from "../../../components/currency/index";
-import { formatDate } from "../../../components/dayjs";
+import { FORMAT_DATE, RUPIAH } from "../../../helpers";
 import styles from "./index.module.css";
 
 const ProductCard = ({
@@ -33,7 +32,7 @@ const ProductCard = ({
             </Button>
           </Link>
           <p className={styles["product-card__action__date"]}>
-            {formatDate(timeStamp)}
+            {FORMAT_DATE(timeStamp)}
           </p>
         </Space>
       </Card>

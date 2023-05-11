@@ -2,8 +2,8 @@ import { ArrowUpOutlined } from "@ant-design/icons";
 import { Button, Layout } from "antd";
 import FooterComponent from "./footer/FooterComponent";
 import HeaderComponent from "./header/HeaderComponent";
-import SidebarComponent from "./sidebar/SidebarComponent";
 import styles from "./index.module.css";
+import SidebarComponent from "./sidebar/SidebarComponent";
 
 const LayoutComponent = ({ children }) => {
   const { Content } = Layout;

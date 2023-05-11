@@ -1,46 +1,33 @@
-import { Layout, Menu, Button } from "antd";
-import React, { useState } from "react";
+import { Button, Layout, Menu } from "antd";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AlfatihIcon2 } from "../../../assets";
 import { MENU_ITEM } from "./constants";
-import "./header.css";
+import styles from "./index.module.css";
 
 const HeaderComponent = ({ isAdmin }) => {
   const { Header } = Layout;
   const path = window.location.pathname;
-  // const [current, setCurrent] = useState(path);
-
-  // const onClick = (e) => {
-  //   setCurrent(e.key);
-  // };
-
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isAdmin");
   };
-
   return (
     <>
       <Header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-          width: "100%",
-          display: "flex",
-          justifyContent: isAdmin === "true" ? "flex-end" : "space-between",
-          alignItems: "center",
-        }}
+        className={
+          isAdmin === "true" ? styles["header__admin"] : styles["header__user"]
+        }
       >
         {isAdmin === "true" ? (
           <Link to="/">
             <Button
-              className="btn-logout"
+              className={styles["header__button-logout"]}
               type="primary"
-              danger
               onClick={logout}
               shape="round"
               size="large"
+              danger
             >
               Logout
             </Button>
@@ -49,32 +36,20 @@ const HeaderComponent = ({ isAdmin }) => {
           <>
             <Link to="/home-page">
               <div
+                className={styles["header__logo"]}
                 style={{
-                  float: "left",
-                  width: 120,
-                  height: 31,
-                  margin: "16px 24px 16px 0",
                   backgroundImage: `url(${AlfatihIcon2})`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
                 }}
-                // onClick={() => {
-                //   setCurrent("");
-                // }}
               />
             </Link>
             <Menu
-              theme="dark"
+              className={styles["header__menu"]}
               mode="horizontal"
               defaultSelectedKeys={["/home-page"]}
-              // onClick={onClick}
+              theme="dark"
               selectedKeys={[path]}
               items={MENU_ITEM}
               disabledOverflow
-              style={{
-                borderBottom: "none",
-              }}
             />
           </>
         )}

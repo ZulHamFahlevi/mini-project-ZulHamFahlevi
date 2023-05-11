@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import "./header.css";
+import styles from "./index.module.css";
 
 import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
 
@@ -24,10 +24,11 @@ const MENU_ITEM = [
     label: (
       <Link to="/">
         <Button
+          className={styles["header__button-logout"]}
+          danger
           type="primary"
           shape="round"
           size="large"
-          danger
           onClick={logout}
         >
           Logout

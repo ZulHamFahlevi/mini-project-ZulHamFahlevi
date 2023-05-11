@@ -5,6 +5,7 @@ import {
   Col,
   Image,
   Input,
+  InputNumber,
   Modal,
   Popconfirm,
   Row,
@@ -16,6 +17,7 @@ import { RUPIAH } from "../../../components/currency";
 import { formatDate } from "../../../components/dayjs";
 import LoadingComponent from "../../../components/loadingComponent/LoadingComponent";
 import { GET_PRODUCT_BY_PK } from "../query/form-query";
+import styles from "./index.module.css";
 
 const ProductDetail = () => {
   const { uuid } = useParams();
@@ -35,6 +37,7 @@ const ProductDetail = () => {
   const [totalPrice, setTotalPrice] = useState(
     dataProduct?.product_by_pk.productPrice
   );
+  const [payment, setPayment] = useState(0);
 
   const decrement = () => {
     if (count > 0) {
@@ -48,110 +51,56 @@ const ProductDetail = () => {
 
   useEffect(() => {
     setTotalPrice(count * dataProduct?.product_by_pk.productPrice);
-  }, [count, dataProduct?.product_by_pk.productPrice]);
+  }, [count, dataProduct]);
 
   return (
-    <>
+    <div className={styles["product-detail"]}>
       {loadingProduct && <LoadingComponent />}
 
-      <Space
-        style={{
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
+      <Space className={styles["product-detail__header"]}>
         <Button
+          className={styles["product-detail__header-button"]}
           type="primary"
-          style={{
-            fontWeight: "bold",
-            marginBottom: "20px",
-          }}
           onClick={() => {
             navigate("/product");
           }}
         >
           Back
         </Button>
-        <h1
-          style={{
-            fontWeight: "bold",
-            textAlign: "center",
-            fontSize: "40px",
-          }}
-        >
+        <h1 className={styles["product-detail__header-title"]}>
           Detail Product
         </h1>
       </Space>
 
-      <Row
-        style={{
-          marginTop: "20px",
-        }}
-        gutter={16}
-      >
+      <Row className={styles["product-detail__content"]} gutter={16}>
         <Col span={9}>
           <Image
+            className={styles["product-detail__content-image"]}
             src={dataProduct?.product_by_pk.imageProduct}
-            style={{
-              borderRadius: "10px",
-              width: "100%",
-              height: "100%",
-            }}
           />
         </Col>
         <Col span={9}>
-          <Card
-            hoverable
-            style={{
-              height: "100%",
-            }}
-          >
-            <Space
-              align="center"
-              style={{
-                width: "100%",
-                justifyContent: "space-between",
-              }}
-            >
-              <h1
-                style={{
-                  fontWeight: "bold",
-                  color: "#5cdbd3",
-                  fontSize: "30px",
-                  textTransform: "capitalize",
-                }}
-              >
+          <Card className={styles["product-detail__content-detail"]} hoverable>
+            <Space className={styles["content-detail__header"]}>
+              <h1 className={styles["content-detail__header-title"]}>
                 {dataProduct?.product_by_pk.productName}
               </h1>
-              <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  color: "#5cdbd3",
-                }}
-              >
+              <p className={styles["content-detail__header-date"]}>
                 {formatDate(dataProduct?.product_by_pk.timeStamp)}
               </p>
             </Space>
-            <p>Kategori: {dataProduct?.product_by_pk.productType}</p>
-            <p>Merek: {dataProduct?.product_by_pk.productBrand}</p>
-            <p>Stok Barang: {dataProduct?.product_by_pk.productStock}</p>
-            <p
-              style={{
-                fontWeight: "bold",
-                fontSize: "20px",
-              }}
+            <Space
+              className={styles["content-detail__body"]}
+              direction="vertical"
             >
+              <p>Kategori: {dataProduct?.product_by_pk.productType}</p>
+              <p>Merek: {dataProduct?.product_by_pk.productBrand}</p>
+              <p>Stok Barang: {dataProduct?.product_by_pk.productStock}</p>
+            </Space>
+            <p className={styles["content-detail__price"]}>
               {RUPIAH(dataProduct?.product_by_pk.productPrice)}
             </p>
-            <p
-              style={{
-                textAlign: "justify",
-                marginTop: "20px",
-              }}
-            >
+            <p className={styles["content-detail__description"]}>
               <b>Deskripsi:</b>
               <br />
               {dataProduct?.product_by_pk.productDescription}
@@ -159,73 +108,43 @@ const ProductDetail = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card hoverable>
-            <h1
-              style={{
-                fontWeight: "bold",
-                color: "#5cdbd3",
-                fontSize: "20px",
-                textTransform: "capitalize",
-              }}
-            >
-              Pesanan Anda
-            </h1>
-            <Space align="start">
+          <Card hoverable className="product-detail__content-order">
+            <h1 className={styles["content-order__title"]}>Pesanan Anda</h1>
+            <Space align="start" className={styles["content-order__product"]}>
               <img
+                className={styles["content-order__product-image"]}
                 src={dataProduct?.product_by_pk.imageProduct}
                 alt="product"
-                style={{ width: "50px", height: "50px" }}
               />
-              <h1 style={{ fontWeight: "bold" }}>
+              <h1 className={styles["content-order__product-name"]}>
                 {dataProduct?.product_by_pk.productName}
               </h1>
             </Space>
-            <Space
-              style={{
-                width: "100%",
-                justifyContent: "space-between",
-                marginTop: "40px",
-              }}
-            >
+            <Space className={styles["content-order__count"]}>
               <p>Jumlah Barang </p>
-              <p
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "20px",
-                }}
-              >
+              <p className={styles["count"]}>
                 <Button
+                  className={styles["count__button-1"]}
                   type="default"
                   onClick={() => {
                     decrement();
-                  }}
-                  style={{
-                    marginRight: "10px",
                   }}
                 >
                   -
                 </Button>
                 {count}
                 <Button
+                  className={styles["count__button-2"]}
                   type="default"
                   onClick={() => {
                     increment();
-                  }}
-                  style={{
-                    marginLeft: "10px",
                   }}
                 >
                   +
                 </Button>
               </p>
             </Space>
-            <Space
-              style={{
-                width: "100%",
-                justifyContent: "space-between",
-                margin: "20px 0",
-              }}
-            >
+            <Space className={styles["content-order__total-price"]}>
               <p>Total Price</p>
               <p
                 style={{
@@ -236,48 +155,49 @@ const ProductDetail = () => {
                 {RUPIAH(totalPrice)}
               </p>
             </Space>
-            <Space
-              style={{
-                width: "100%",
-                justifyContent: "space-between",
-                marginBottom: "20px",
-              }}
-            >
+            <Space className={styles["content-order__payment"]}>
               <p>Bayar</p>
-              <Input
-                placeholder="Masukan Nominal Pembayaran"
-                style={{
-                  width: "100%",
+              <InputNumber
+                onChange={(value) => {
+                  setPayment(value);
                 }}
+                className={styles["content-order__payment-input"]}
+                min={0}
+                placeholder="Masukan Nominal Pembayaran"
               />
             </Space>
-            <Popconfirm
-              title="Konfirmasi Pesananan Anda"
-              description="Lanjutkan Pemesanan?"
-              onConfirm={() => {
-                Modal.success({
-                  title: "Success",
-                  content: "Terimakasih Telah Melakukan Pemesanan",
-                  onOk() {
-                    navigate("/product");
-                  },
-                });
-              }}
-            >
-              <Button
-                type="primary"
-                style={{
-                  width: "100%",
-                  fontWeight: "bold",
+            <Space className={styles["content-order__button"]}>
+              <Popconfirm
+                className={styles["content-order__button-popconfirm"]}
+                title="Konfirmasi Pesananan Anda"
+                description="Lanjutkan Pemesanan?"
+                onConfirm={() => {
+                  Modal.success({
+                    title: "Success",
+                    content: "Terimakasih Telah Melakukan Pemesanan",
+                    onOk() {
+                      navigate("/product");
+                      window.open("https://wa.link/3ez9vm", "_blank");
+                    },
+                  });
                 }}
               >
-                Buat Pesanan
-              </Button>
-            </Popconfirm>
+                <Button
+                  className={styles["content-order__button-confirm"]}
+                  disabled={payment < totalPrice || count === 0}
+                  type="primary"
+                  style={{
+                    width: "310px",
+                  }}
+                >
+                  Buat Pesanan
+                </Button>
+              </Popconfirm>
+            </Space>
           </Card>
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

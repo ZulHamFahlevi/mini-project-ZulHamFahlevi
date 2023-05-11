@@ -1,14 +1,14 @@
-.site-layout {
+.layout {
     min-height: 100vh;
 }
 
-.site-layout-background {
+.layout-content {
     padding: 24px;
     min-height: 400px;
-    background: #fff;
+    background: var(--color-white)
 }
 
-.btn-scroll-top {
+.layout-content__button {
     position: fixed;
     bottom: 20px;
     right: 20px;

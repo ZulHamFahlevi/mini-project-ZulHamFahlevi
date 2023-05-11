@@ -8,8 +8,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Button, Card, Form, Input, Modal, Radio, Spin, message } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./loginPage.css";
 import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
+import styles from "./index.module.css";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -136,11 +136,11 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="container-center">
+      <div className={styles["container-card"]}>
         <Spin spinning={loading}>
-          <Card title="Welcome" className="card-login">
+          <Card title="Welcome" className={styles["container-card__login"]}>
             <Radio.Group
-              className="radio-group-login"
+              className={styles["login__radio-group"]}
               defaultValue="login"
               buttonStyle="solid"
               onChange={handleRadioButton}

@@ -1,41 +1,22 @@
-import React from "react";
 import { Carousel } from "antd";
-import { HeroImage, AlfatihCarousel, AlfatihCarousel2 } from "../../../assets/";
-
-const contentStyle = {
-  height: "700px",
-  color: "#fff",
-  textAlign: "center",
-  background: "#364d79",
-  backgroundSize: "contain",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  objectFit: "cover",
-  backgroundImage: `url(${AlfatihCarousel})`,
-};
+import React from "react";
+import { AlfatihCarousel, AlfatihCarousel2 } from "../../../assets/";
+import styles from "./index.module.css";
 
 const CarouselComponent = () => {
   return (
     <>
-      <Carousel autoplay>
-        <div>
+      <Carousel className="carousel" autoplay>
+        <div className="carousel-item">
           <img
+            className={styles["carousel-item__image"]}
             src={AlfatihCarousel}
-            style={{
-              width: "100%",
-              height: "800px",
-              objectFit: "cover",
-            }}
           />
         </div>
-        <div>
+        <div className="carousel-item">
           <img
+            className={styles["carousel-item__image"]}
             src={AlfatihCarousel2}
-            style={{
-              width: "100%",
-              height: "800px",
-              objectFit: "cover",
-            }}
           />
         </div>
       </Carousel>

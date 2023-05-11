@@ -21,13 +21,13 @@ import { useState } from "react";
 import { RUPIAH } from "../../components/currency";
 import { uploaderConfig } from "./../../config/uploader-config";
 import { useSingleUploader } from "./../../hooks/useSingleUploader";
-import "./inputProduct.css";
 import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   GET_PRODUCT,
   UPDATE_PRODUCT,
 } from "./query/form-query";
+import styles from "./index.module.css";
 
 const InputProductComponent = () => {
   const { TextArea } = Input;
@@ -274,10 +274,11 @@ const InputProductComponent = () => {
 
   return (
     <>
-      <Row justify={"center"}>
+      <Row className={styles["input-product-container"]} gutter={[16, 16]}>
         <Col span={8}>
-          <h1 className="input-product-title-form">Input Product</h1>
+          <h1 className={styles["input-product-title"]}>Input Product</h1>
           <Form
+            className="input-product-form"
             name="inputProduct"
             onFinish={isEdit ? onEdit : onAdd}
             layout="vertical"
@@ -334,6 +335,7 @@ const InputProductComponent = () => {
                 </Button>
               </Upload>
               <span
+                className={styles["input-product-form-item-image"]}
                 style={{
                   display: "flex",
                   justifyContent: "start",

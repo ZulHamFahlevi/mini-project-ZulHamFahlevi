@@ -5,12 +5,24 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
-import { Button, Card, Form, Input, Modal, Radio, Spin, message } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  Modal,
+  Radio,
+  Row,
+  Spin,
+  message,
+} from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
 import Swal from "sweetalert2";
+import { LoginImage } from "../../assets";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -156,70 +168,87 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className={styles["container-card"]}>
-        <Spin spinning={loading}>
-          <Card title="Welcome" className={styles["container-card__login"]}>
-            <Radio.Group
-              className={styles["login__radio-group"]}
-              defaultValue="login"
-              buttonStyle="solid"
-              onChange={handleRadioButton}
-              value={radio}
-            >
-              <Radio.Button value="login">login</Radio.Button>
-              <Radio.Button value="register">Register</Radio.Button>
-            </Radio.Group>
-            <Form
-              form={form}
-              onFinish={radio === "login" ? onLogin : onRegister}
-              style={{
-                marginTop: 20,
-              }}
-            >
-              <Form.Item
-                name="username"
-                rules={[
-                  { required: true, message: "Please input your username!" },
-                  { min: 3, message: "Username minimal 3 karakter" },
-                ]}
-              >
-                <Input placeholder="User Name" prefix={<UserOutlined />} />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={[
-                  { required: true, message: "Please input your password!" },
-                  { min: 8, message: "Password minimal 8 karakter" },
-                ]}
-              >
-                <Input.Password
-                  placeholder="Password"
-                  prefix={<LockOutlined />}
-                  iconRender={(visible) =>
-                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                  }
-                />
-              </Form.Item>
-              <Form.Item
-                wrapperCol={{
-                  span: 24,
-                }}
-              >
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{
-                    width: "100%",
-                  }}
-                  loading={isRegisterLoading}
+      <Row className={styles["login"]}>
+        <Col span={8}>
+          <img
+            src={LoginImage}
+            alt="login"
+            className={styles["login__image"]}
+          />
+        </Col>
+        <Col span={8}>
+          <div className={styles["container-card"]}>
+            <Spin spinning={loading}>
+              <Card title="Welcome" className={styles["container-card__login"]}>
+                <Radio.Group
+                  className={styles["login__radio-group"]}
+                  defaultValue="login"
+                  buttonStyle="solid"
+                  onChange={handleRadioButton}
+                  value={radio}
                 >
-                  {radio === "login" ? "Login" : "Register"}
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
-        </Spin>
-      </div>
+                  <Radio.Button value="login">login</Radio.Button>
+                  <Radio.Button value="register">Register</Radio.Button>
+                </Radio.Group>
+                <Form
+                  form={form}
+                  onFinish={radio === "login" ? onLogin : onRegister}
+                  style={{
+                    marginTop: 20,
+                  }}
+                >
+                  <Form.Item
+                    name="username"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your username!",
+                      },
+                      { min: 3, message: "Username minimal 3 karakter" },
+                    ]}
+                  >
+                    <Input placeholder="User Name" prefix={<UserOutlined />} />
+                  </Form.Item>
+                  <Form.Item
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                      { min: 8, message: "Password minimal 8 karakter" },
+                    ]}
+                  >
+                    <Input.Password
+                      placeholder="Password"
+                      prefix={<LockOutlined />}
+                      iconRender={(visible) =>
+                        visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    wrapperCol={{
+                      span: 24,
+                    }}
+                  >
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      style={{
+                        width: "100%",
+                      }}
+                      loading={isRegisterLoading}
+                    >
+                      {radio === "login" ? "Login" : "Register"}
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Card>
+            </Spin>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 };

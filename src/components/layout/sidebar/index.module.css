@@ -1,0 +1,43 @@
+.sidebar {
+    overflow: auto;
+    position: relative;
+    left: 0;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar__menu {
+    /* background-color: var(--color-primary); */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.sidebar__menu-logo {
+    height: 30;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.sidebar__menu-logo-icon {
+    font-size: 20px;
+    color: var(--color-black);
+    transition: all 0.3s ease;
+}
+
+.sidebar__menu-logo-image {
+    width: 90px;
+    transition: all 0.3s ease;
+}
+
+.sidebar__button {
+    font-size: 18px;
+    text-align: center;
+    position: fixed;
+    bottom: 20px;
+    padding: 0;
+    position: fixed;
+    z-index: 1;
+}

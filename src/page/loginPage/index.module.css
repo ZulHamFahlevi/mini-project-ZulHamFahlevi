@@ -1,0 +1,43 @@
+.login {
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+}
+
+.login__image:hover {
+    transform: scale(1.1);
+}
+
+
+.container-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+}
+
+.container-card__login {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+
+}
+
+.container-card__login:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.login__radio-group {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+}

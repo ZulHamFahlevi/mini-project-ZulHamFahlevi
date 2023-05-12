@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -53,26 +54,30 @@ const LoginPage = () => {
           },
         },
         onCompleted: () => {
-          Modal.success({
+          Swal.fire({
+            icon: "success",
             title: "Register Success",
-            content: "Silahkan login",
-            centered: true,
-            onOk: () => {
+            text: "Silahkan login",
+            confirmButtonText: "Login",
+          }).then((result) => {
+            if (result.isConfirmed) {
               setRadio("login");
-            },
+              form.resetFields();
+            }
           });
-          form.resetFields();
         },
       });
     } else {
-      Modal.warning({
-        title: "Username sudah ada",
-        content: "Silahkan coba lagi",
-        centered: true,
-        onOk() {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Username sudah ada",
+        confirmButtonText: "Coba lagi",
+      }).then((result) => {
+        if (result.isConfirmed) {
           setRadio("register");
           form.resetFields();
-        },
+        }
       });
     }
   };
@@ -104,14 +109,21 @@ const LoginPage = () => {
 
     //cek isAdmin
     if (!isUserExist) {
-      Modal.warning({
-        title: "Username belum terdaftar",
-        content: "Silahkan register",
-        centered: true,
-        onOk() {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Username belum terdaftar",
+        confirmButtonText: "Register",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
           setRadio("register");
           form.resetFields();
-        },
+        } else {
+          setRadio("login");
+          form.resetFields();
+        }
       });
     } else if (isAdmin || isUser) {
       localStorage.setItem("token", true);
@@ -123,14 +135,22 @@ const LoginPage = () => {
         navigate(isAdmin ? "/dashboard" : "/home-page");
       }, 1000);
     } else {
-      Modal.warning({
-        title: "Username atau Password salah",
-        content: "Silahkan coba lagi",
-        centered: true,
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Username atau Password salah",
+        confirmButtonText: "Coba lagi",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setRadio("login");
+          form.resetFields();
+        } else {
+          setRadio("login");
+          form.resetFields();
+        }
       });
-      form.resetFields();
-      setRadio("login");
-      setLoading(false);
     }
   };
 

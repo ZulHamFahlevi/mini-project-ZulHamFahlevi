@@ -207,7 +207,7 @@ const InputProductComponent = () => {
           title: "Success",
           text: "Success Edit Product",
           confirmButtonText: `OK`,
-          confirmButtonColor: "#3085d6",
+          confirmButtonColor: "#775739",
         }).then((result) => {
           if (result.isConfirmed) {
             form.resetFields();
@@ -273,7 +273,7 @@ const InputProductComponent = () => {
           title: "Success",
           text: "Success Add Product",
           confirmButtonText: `OK`,
-          confirmButtonColor: "#3085d6",
+          confirmButtonColor: "#775739",
         }).then((result) => {
           if (result.isConfirmed) {
             form.resetFields();

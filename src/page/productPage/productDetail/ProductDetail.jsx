@@ -56,6 +56,19 @@ const ProductDetail = () => {
     setTotalPrice(count * dataProduct?.product_by_pk.productPrice);
   }, [count, dataProduct]);
 
+  const message =
+    `Pesanan Saya:%0A` +
+    `Nama Product: ${dataProduct?.product_by_pk.productName}%0A` +
+    `Jumlah Product: ${count}%0A` +
+    `Total Harga: ${RUPIAH(totalPrice)}%0A` +
+    `Uang Pembayaran: ${RUPIAH(payment)}%0A` +
+    `Uang Kembalian: ${RUPIAH(kembalian)}%0A` +
+    `Terima Kasih%0A`;
+
+  const phoneNumber = "6289654809231";
+
+  const waLink = `https://wa.me/${phoneNumber}?text=${message}`;
+
   return (
     <div className={styles["product-detail"]}>
       {loadingProduct && <LoadingComponent />}
@@ -189,10 +202,11 @@ const ProductDetail = () => {
                         )}`,
                         icon: "success",
                         confirmButtonText: "Ok",
+                        confirmButtonColor: "#775739",
                       }).then((result) => {
                         if (result.isConfirmed) {
                           navigate("/product");
-                          window.open("https://wa.link/3ez9vm", "_blank");
+                          window.open(waLink, "_blank");
                         }
                       });
                     }, 1500);

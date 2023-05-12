@@ -11,7 +11,6 @@ import {
   Col,
   Form,
   Input,
-  Modal,
   Radio,
   Row,
   Spin,
@@ -19,10 +18,10 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./index.module.css";
-import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
 import Swal from "sweetalert2";
 import { LoginImage } from "../../assets";
+import styles from "./index.module.css";
+import { ADD_PROFILE, GET_PROFILE } from "./query/profile-query";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -71,6 +70,7 @@ const LoginPage = () => {
             title: "Register Success",
             text: "Silahkan login",
             confirmButtonText: "Login",
+            confirmButtonColor: "#775739",
           }).then((result) => {
             if (result.isConfirmed) {
               setRadio("login");
@@ -85,6 +85,7 @@ const LoginPage = () => {
         title: "Oops...",
         text: "Username sudah ada",
         confirmButtonText: "Coba lagi",
+        confirmButtonColor: "#775739",
       }).then((result) => {
         if (result.isConfirmed) {
           setRadio("register");
@@ -126,6 +127,7 @@ const LoginPage = () => {
         title: "Oops...",
         text: "Username belum terdaftar",
         confirmButtonText: "Register",
+        confirmButtonColor: "#775739",
         showCancelButton: true,
         cancelButtonText: "Cancel",
       }).then((result) => {
@@ -152,6 +154,7 @@ const LoginPage = () => {
         title: "Oops...",
         text: "Username atau Password salah",
         confirmButtonText: "Coba lagi",
+        confirmButtonColor: "#775739",
         showCancelButton: true,
         cancelButtonText: "Cancel",
       }).then((result) => {
@@ -168,18 +171,18 @@ const LoginPage = () => {
 
   return (
     <>
-      <Row className={styles["login"]}>
-        <Col span={8}>
-          <img
-            src={LoginImage}
-            alt="login"
-            className={styles["login__image"]}
-          />
-        </Col>
-        <Col span={8}>
-          <div className={styles["container-card"]}>
-            <Spin spinning={loading}>
-              <Card title="Welcome" className={styles["container-card__login"]}>
+      <div className={styles["container-card"]}>
+        <Spin spinning={loading}>
+          <Card title="Welcome" className={styles["container-card__login"]}>
+            <Row className={styles["login"]}>
+              <Col span={12}>
+                <img
+                  src={LoginImage}
+                  alt="login"
+                  className={styles["login__image"]}
+                />
+              </Col>
+              <Col span={12} className={styles["login__form"]}>
                 <Radio.Group
                   className={styles["login__radio-group"]}
                   defaultValue="login"
@@ -244,11 +247,11 @@ const LoginPage = () => {
                     </Button>
                   </Form.Item>
                 </Form>
-              </Card>
-            </Spin>
-          </div>
-        </Col>
-      </Row>
+              </Col>
+            </Row>
+          </Card>
+        </Spin>
+      </div>
     </>
   );
 };

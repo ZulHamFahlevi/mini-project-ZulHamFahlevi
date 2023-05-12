@@ -171,18 +171,18 @@ const LoginPage = () => {
 
   return (
     <>
-      <Row className={styles["login"]}>
-        <Col span={8}>
-          <img
-            src={LoginImage}
-            alt="login"
-            className={styles["login__image"]}
-          />
-        </Col>
-        <Col span={8}>
-          <div className={styles["container-card"]}>
-            <Spin spinning={loading}>
-              <Card title="Welcome" className={styles["container-card__login"]}>
+      <div className={styles["container-card"]}>
+        <Spin spinning={loading}>
+          <Card title="Welcome" className={styles["container-card__login"]}>
+            <Row className={styles["login"]}>
+              <Col span={12}>
+                <img
+                  src={LoginImage}
+                  alt="login"
+                  className={styles["login__image"]}
+                />
+              </Col>
+              <Col span={12} className={styles["login__form"]}>
                 <Radio.Group
                   className={styles["login__radio-group"]}
                   defaultValue="login"
@@ -247,11 +247,11 @@ const LoginPage = () => {
                     </Button>
                   </Form.Item>
                 </Form>
-              </Card>
-            </Spin>
-          </div>
-        </Col>
-      </Row>
+              </Col>
+            </Row>
+          </Card>
+        </Spin>
+      </div>
     </>
   );
 };

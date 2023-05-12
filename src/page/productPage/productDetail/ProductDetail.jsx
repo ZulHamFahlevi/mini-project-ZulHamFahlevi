@@ -189,6 +189,7 @@ const ProductDetail = () => {
                         )}`,
                         icon: "success",
                         confirmButtonText: "Ok",
+                        confirmButtonColor: "#775739",
                       }).then((result) => {
                         if (result.isConfirmed) {
                           navigate("/product");

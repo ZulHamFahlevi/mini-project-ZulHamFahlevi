@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import Cookies from "js-cookie";
 import { Suspense, useEffect } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import PageNotFound from "../components/404/PageNotFound";
@@ -12,8 +13,8 @@ import InputProductComponent from "./../page/inputProduct/InputProductComponent"
 import LoginPage from "./../page/loginPage/LoginPage";
 
 const RouteManagement = () => {
-  const token = localStorage.getItem("token");
-  const isAdmin = localStorage.getItem("isAdmin");
+  const token = Cookies.get("token");
+  const isAdmin = Cookies.get("isAdmin");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,10 +34,7 @@ const RouteManagement = () => {
           <LayoutComponent>
             <Routes>
               <Route path="/dashboard" element={<DashboardComponent />} />
-              <Route
-                path="/input-product"
-                element={<InputProductComponent />}
-              />
+              <Route path="/input-product" element={<InputProductComponent />} />
               //page not found
               <Route
                 path="*"

@@ -1,4 +1,5 @@
 import { Button, Layout, Menu } from "antd";
+import Cookies from "js-cookie";
 import React from "react";
 import { Link } from "react-router-dom";
 import { AlfatihIcon2 } from "../../../assets";
@@ -9,16 +10,12 @@ const HeaderComponent = ({ isAdmin }) => {
   const { Header } = Layout;
   const path = window.location.pathname;
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isAdmin");
+    Cookies.remove("isAdmin");
+    Cookies.remove("token");
   };
   return (
     <>
-      <Header
-        className={
-          isAdmin === "true" ? styles["header__admin"] : styles["header__user"]
-        }
-      >
+      <Header className={isAdmin === "true" ? styles["header__admin"] : styles["header__user"]}>
         {isAdmin === "true" ? (
           <Link to="/">
             <Button

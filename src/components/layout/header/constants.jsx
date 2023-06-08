@@ -1,12 +1,12 @@
+import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import styles from "./index.module.css";
 
-import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
-
 const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("isAdmin");
+  Cookies.remove("token");
+  Cookies.remove("isAdmin");
 };
 
 const MENU_ITEM = [

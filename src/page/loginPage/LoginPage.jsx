@@ -1,21 +1,7 @@
-import {
-  EyeInvisibleOutlined,
-  EyeTwoTone,
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Spin,
-  message,
-} from "antd";
+import { Button, Card, Col, Form, Input, Radio, Row, Spin, message } from "antd";
+import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -36,25 +22,18 @@ const LoginPage = () => {
 
   //GraphQL
   //GET PROFILE
-  const {
-    data: profileData,
-    loading: profileLoading,
-    error: profileError,
-  } = useQuery(GET_PROFILE);
+  const { data: profileData, loading: profileLoading, error: profileError } = useQuery(GET_PROFILE);
 
   //ADD PROFILE
-  const [register, { loading: isRegisterLoading, error: isRegisterError }] =
-    useMutation(ADD_PROFILE, {
-      refetchQueries: [GET_PROFILE],
-    });
+  const [register, { loading: isRegisterLoading, error: isRegisterError }] = useMutation(ADD_PROFILE, {
+    refetchQueries: [GET_PROFILE],
+  });
 
   //REGISTER
   const onRegister = (values) => {
     const profile = [...profileData?.profile];
 
-    const isUserExist = profile?.some(
-      (item) => item.username === values.username
-    );
+    const isUserExist = profile?.some((item) => item.username === values.username);
 
     if (!isUserExist) {
       register({
@@ -101,24 +80,16 @@ const LoginPage = () => {
 
     //admin login validation (username & password & isAdmin)
     const isAdmin = profile?.find(
-      (item) =>
-        item.username === values.username &&
-        item.password === values.password &&
-        item.isAdmin === true
+      (item) => item.username === values.username && item.password === values.password && item.isAdmin === true
     );
 
     //user login validation (username & password & isAdmin)
     const isUser = profile?.find(
-      (item) =>
-        item.username === values.username &&
-        item.password === values.password &&
-        item.isAdmin === false
+      (item) => item.username === values.username && item.password === values.password && item.isAdmin === false
     );
 
     //cek apakah user terdaftar atau tidak di database
-    const isUserExist = profile?.some(
-      (item) => item.username === values.username
-    );
+    const isUserExist = profile?.some((item) => item.username === values.username);
 
     //cek isAdmin
     if (!isUserExist) {
@@ -140,8 +111,8 @@ const LoginPage = () => {
         }
       });
     } else if (isAdmin || isUser) {
-      localStorage.setItem("token", true);
-      localStorage.setItem("isAdmin", isAdmin ? true : false);
+      Cookies.set("token", true, { expires: 1 });
+      Cookies.set("isAdmin", isAdmin ? true : false, { expires: 1 });
       setLoading(true);
       message.success({ content: "Login Success", duration: 1 });
       setTimeout(() => {
@@ -176,11 +147,7 @@ const LoginPage = () => {
           <Card title="Welcome" className={styles["container-card__login"]}>
             <Row className={styles["login"]}>
               <Col span={12}>
-                <img
-                  src={LoginImage}
-                  alt="login"
-                  className={styles["login__image"]}
-                />
+                <img src={LoginImage} alt="login" className={styles["login__image"]} />
               </Col>
               <Col span={12} className={styles["login__form"]}>
                 <Radio.Group
@@ -225,9 +192,7 @@ const LoginPage = () => {
                     <Input.Password
                       placeholder="Password"
                       prefix={<LockOutlined />}
-                      iconRender={(visible) =>
-                        visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                      }
+                      iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                     />
                   </Form.Item>
                   <Form.Item

@@ -23,3 +23,5 @@ Untuk Menjalankan Aplikasi ini, silahkan ikuti langkah-langkah berikut:
    npm install
    npm start
    ```
+
+   ## https://al-fatih.netlify.app
